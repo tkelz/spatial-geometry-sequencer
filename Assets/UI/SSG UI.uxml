@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Button1.uss?fileID=7433441132597879392&amp;guid=ea9e3f04f753e694d8eff15d19b288ff&amp;type=3#Button1" />
+    <ui:GroupBox style="height: 284px; width: 282px;">
+        <ui:Slider label="Size" value="42" high-value="100" name="Size" style="opacity: 1;" />
+        <ui:Slider label="Rotation X" value="42" high-value="100" name="RotX" />
+        <ui:Slider label="Rotation Y" value="42" high-value="100" name="RotY" style="flex-direction: row;" />
+        <ui:Slider label="Rotation Z" value="42" high-value="100" name="RotZ" />
+        <ui:Slider label="Postion X" value="42" high-value="100" name="PosX" />
+        <ui:Slider label="Postion Y" value="42" high-value="100" name="PosY" />
+        <ui:Slider label="Postion Z" value="42" high-value="100" name="PosZ" style="opacity: 1;" />
+    </ui:GroupBox>
+</ui:UXML>
