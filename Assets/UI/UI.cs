@@ -7,25 +7,33 @@ public class PathTransformUIController : MonoBehaviour
     [Header("The UI Document that holds your sliders")]
     public UIDocument uiDocument;
 
-    [Header("The object you want to drive")]
-    public Transform target;
+    [Header("Game Manager")]
+    public GameManager gameManager;
 
     // Runtime references to our sliders
+    Slider beadSpeed;
+    DropdownField shapeDropdown;
     Slider posX, posY, posZ;
     Slider rotX, rotY, rotZ;
     Slider size;
 
+    Toggle reverbToggle;
+
     void OnEnable()
     {
-        if (uiDocument == null || target == null)
+        if (uiDocument == null || gameManager == null)
         {
-            Debug.LogError("PathTransformUIController: Assign both a UIDocument and a target Transform!");
+            Debug.LogError("PathTransformUIController: Assign both a UIDocument and GameManager!");
             enabled = false;
             return;
         }
 
         // Grab the root VisualElement
         var root = uiDocument.rootVisualElement;
+
+        beadSpeed = root.Q<Slider>("BeadSpeed");
+        shapeDropdown = root.Q<DropdownField>("ShapeType");
+        reverbToggle = root.Q<Toggle>("ReverbToggle");
 
         // Look up sliders by the name attribute in UXML
         posX = root.Q<Slider>("PosX");
@@ -39,62 +47,62 @@ public class PathTransformUIController : MonoBehaviour
         size = root.Q<Slider>("Size");
 
         // Hook up callbacks
+        beadSpeed.RegisterValueChangedCallback(evt =>
+        {
+            // Change the speed of the bead
+            gameManager.ChangeBeadSpeed(evt.newValue);
+            // Update the slider label
+            beadSpeed.label = $"Bead Speed: {evt.newValue:F2}";
+        });
+        shapeDropdown.RegisterValueChangedCallback(evt =>
+        {
+            // Change the shape of the path
+            gameManager.ChangeShape((evt.newValue));
+        });
+        reverbToggle.RegisterValueChangedCallback(evt =>
+        {
+            // Enable or disable the audio reverb
+            gameManager.EnableAudioReverb(evt.newValue);
+        });
+
         posX.RegisterValueChangedCallback(evt =>
         {
-            var p = target.localPosition;
-            p.x = evt.newValue;
-            target.localPosition = p;
+            gameManager.ChangeShapePosition(new Vector3(evt.newValue, posY.value, posZ.value));
             posX.label = $"Pos X: {evt.newValue:F2}";
         });
         posY.RegisterValueChangedCallback(evt =>
         {
-            var p = target.localPosition;
-            p.y = evt.newValue;
-            target.localPosition = p;
+            gameManager.ChangeShapePosition(new Vector3(posX.value, evt.newValue, posZ.value));
             posY.label = $"Pos Y: {evt.newValue:F2}";
         });
         posZ.RegisterValueChangedCallback(evt =>
         {
-            var p = target.localPosition;
-            p.z = evt.newValue;
-            target.localPosition = p;
+            gameManager.ChangeShapePosition(new Vector3(posX.value, posY.value, evt.newValue));
             posZ.label = $"Pos Z: {evt.newValue:F2}";
         });
 
         rotX.RegisterValueChangedCallback(evt =>
         {
-            var r = target.localEulerAngles;
-            r.x = evt.newValue;
-            target.localEulerAngles = r;
+            gameManager.ChangeShapeRotation(new Vector3(evt.newValue, rotY.value, rotZ.value));
             rotX.label = $"Rot X: {evt.newValue:F1}";
         });
         rotY.RegisterValueChangedCallback(evt =>
         {
-            var r = target.localEulerAngles;
-            r.y = evt.newValue;
-            target.localEulerAngles = r;
+            gameManager.ChangeShapeRotation(new Vector3(rotX.value, evt.newValue, rotZ.value));
             rotY.label = $"Rot Y: {evt.newValue:F1}";
         });
         rotZ.RegisterValueChangedCallback(evt =>
         {
-            var r = target.localEulerAngles;
-            r.z = evt.newValue;
-            target.localEulerAngles = r;
+            gameManager.ChangeShapeRotation(new Vector3(rotX.value, rotY.value, evt.newValue));
             rotZ.label = $"Rot Z: {evt.newValue:F1}";
         });
 
         // Update the size slider callback with clamping and incremental scaling
         size.RegisterValueChangedCallback(evt =>
         {
-            // Clamp the slider value to a reasonable range (e.g., 0.1 to 5.0)
-            float clampedValue = Mathf.Clamp(evt.newValue, 0.1f, 5.0f);
-
-            // Apply uniform scaling based on the clamped value
-            float scaleFactor = clampedValue / target.localScale.x;
-            target.localScale *= scaleFactor;
-
+            gameManager.ChangeShapeScale(evt.newValue);
             // Update the slider label
-            size.label = $"Size: {clampedValue:F2}";
+            size.label = $"Size: {evt.newValue:F2}";
         });
 
         // Initialize UI to match current transform
@@ -106,17 +114,20 @@ public class PathTransformUIController : MonoBehaviour
     /// </summary>
     public void RefreshUI()
     {
-        var p = target.localPosition;
+        var p = gameManager.shapeParent.position;
         posX.value = p.x; posX.label = $"Pos X: {p.x:F2}";
         posY.value = p.y; posY.label = $"Pos Y: {p.y:F2}";
         posZ.value = p.z; posZ.label = $"Pos Z: {p.z:F2}";
 
-        var r = target.localEulerAngles;
+        var r = gameManager.shapeParent.localEulerAngles;
         rotX.value = r.x; rotX.label = $"Rot X: {r.x:F1}";
         rotY.value = r.y; rotY.label = $"Rot Y: {r.y:F1}";
         rotZ.value = r.z; rotZ.label = $"Rot Z: {r.z:F1}";
 
-        float s = target.localScale.x;
+        float s = gameManager.shapeParent.localScale.x;
         size.value = s; size.label = $"Size: {s:F2}";
+
+        print($"Current shape: {gameManager.activeShapeName}");
+        shapeDropdown.value = gameManager.activeShapeName;
     }
 }
