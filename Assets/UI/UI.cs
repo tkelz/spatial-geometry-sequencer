@@ -17,7 +17,10 @@ public class PathTransformUIController : MonoBehaviour
     Slider rotX, rotY, rotZ;
     Slider size;
 
+    Toggle spatializeToggle;
     Toggle reverbToggle;
+    DropdownField reverbDropdown;
+    Slider reverbRoomSize, reverbLevel, reverbDelay, reverbReflection, reverbReflectionDelay;
 
     void OnEnable()
     {
@@ -31,9 +34,16 @@ public class PathTransformUIController : MonoBehaviour
         // Grab the root VisualElement
         var root = uiDocument.rootVisualElement;
 
+        spatializeToggle = root.Q<Toggle>("Spatialize");
         beadSpeed = root.Q<Slider>("BeadSpeed");
         shapeDropdown = root.Q<DropdownField>("ShapeType");
         reverbToggle = root.Q<Toggle>("ReverbToggle");
+        reverbDropdown = root.Q<DropdownField>("ReverbPreset");
+        reverbRoomSize = root.Q<Slider>("RoomSize");
+        reverbLevel = root.Q<Slider>("ReverbLevel");
+        reverbDelay = root.Q<Slider>("ReverbDelay");
+        reverbReflection = root.Q<Slider>("Reflection");
+        reverbReflectionDelay = root.Q<Slider>("ReflectionDelay");
 
         // Look up sliders by the name attribute in UXML
         posX = root.Q<Slider>("PosX");
@@ -57,12 +67,7 @@ public class PathTransformUIController : MonoBehaviour
         shapeDropdown.RegisterValueChangedCallback(evt =>
         {
             // Change the shape of the path
-            gameManager.ChangeShape((evt.newValue));
-        });
-        reverbToggle.RegisterValueChangedCallback(evt =>
-        {
-            // Enable or disable the audio reverb
-            gameManager.EnableAudioReverb(evt.newValue);
+            gameManager.ChangeShape(evt.newValue);
         });
 
         posX.RegisterValueChangedCallback(evt =>
@@ -105,6 +110,27 @@ public class PathTransformUIController : MonoBehaviour
             size.label = $"Size: {evt.newValue:F2}";
         });
 
+        spatializeToggle.RegisterValueChangedCallback(evt => gameManager.EnableSpatialize(evt.newValue));
+
+        // Reverb
+        reverbToggle.RegisterValueChangedCallback(evt => gameManager.EnableAudioReverb(evt.newValue));
+        foreach (var preset in System.Enum.GetValues(typeof(AudioReverbPreset)))
+        {
+            reverbDropdown.choices.Add(preset.ToString());
+        }
+        reverbDropdown.value = AudioReverbPreset.Cave.ToString();
+        reverbDropdown.RegisterValueChangedCallback(evt =>
+        {
+            AudioReverbPreset preset = (AudioReverbPreset)System.Enum.Parse(typeof(AudioReverbPreset), evt.newValue);
+            gameManager.ChangeReverbPreset(preset);
+
+            reverbRoomSize.value = gameManager.audioReverbZone.room;
+            reverbLevel.value = gameManager.audioReverbZone.reverb;
+            reverbDelay.value = gameManager.audioReverbZone.reverbDelay;
+            reverbReflection.value = gameManager.audioReverbZone.reflections;
+            reverbReflectionDelay.value = gameManager.audioReverbZone.reflectionsDelay;
+        });
+
         // Initialize UI to match current transform
         RefreshUI();
     }
@@ -127,7 +153,6 @@ public class PathTransformUIController : MonoBehaviour
         float s = gameManager.shapeParent.localScale.x;
         size.value = s; size.label = $"Size: {s:F2}";
 
-        print($"Current shape: {gameManager.activeShapeName}");
         shapeDropdown.value = gameManager.activeShapeName;
     }
 }

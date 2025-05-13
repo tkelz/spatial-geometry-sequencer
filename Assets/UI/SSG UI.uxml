@@ -1,20 +1,37 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Button1.uss?fileID=7433441132597879392&amp;guid=ea9e3f04f753e694d8eff15d19b288ff&amp;type=3#Button1" />
-    <ui:GroupBox style="height: 439px; width: 282px; background-color: rgba(0, 0, 0, 0.24); flex-grow: 1;">
-        <ui:DropdownField label="Music" name="Music" choices=",,," style="color: rgb(255, 255, 255);" />
-        <ui:Slider label="Bead Speed" value="10" high-value="100" name="BeadSpeed" low-value="1" style="color: rgb(255, 255, 255);" />
-        <ui:Toggle label="Reverb Toggle" name="ReverbToggle" value="true" style="color: rgb(255, 255, 255);" />
-        <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-        <ui:DropdownField label="Shape Type" name="ShapeType" choices="Torus,Spiral,Ring,Line" style="color: rgb(255, 255, 255);" />
-        <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-        <ui:Slider label="Size" value="1" high-value="10" name="Size" low-value="0.5" style="opacity: 1; color: rgb(255, 255, 255); align-items: auto;" />
-        <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-        <ui:Slider label="Rotation X" value="0" high-value="180" name="RotX" low-value="-180" style="color: rgb(255, 255, 255);" />
-        <ui:Slider label="Rotation Y" value="0" high-value="180" name="RotY" low-value="-180" style="flex-direction: row; color: rgb(255, 255, 255);" />
-        <ui:Slider label="Rotation Z" value="0" high-value="180" name="RotZ" low-value="-180" style="color: rgb(255, 255, 255);" />
-        <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-        <ui:Slider label="Postion X" value="0" high-value="10" name="PosX" low-value="-10" style="color: rgb(255, 255, 255);" />
-        <ui:Slider label="Postion Y" value="0" high-value="10" name="PosY" low-value="-10" style="color: rgb(255, 255, 255);" />
-        <ui:Slider label="Postion Z" value="0" high-value="10" name="PosZ" low-value="-10" style="opacity: 1; color: rgb(255, 255, 255);" />
-    </ui:GroupBox>
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-between; align-self: auto; align-content: flex-start; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+        <ui:VisualElement style="flex-grow: 0; width: 280px; flex-shrink: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-color: rgba(0, 0, 0, 0);">
+            <ui:GroupBox style="height: 100px; width: 100%; background-color: rgba(0, 0, 0, 0.24); flex-grow: 1; flex-direction: column; align-items: stretch; justify-content: flex-start; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; flex-shrink: 1; align-content: flex-start; align-self: flex-start;">
+                <ui:DropdownField label="Music" name="Music" choices=",,," style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Bead Speed" value="10" high-value="100" name="BeadSpeed" low-value="1" style="color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                <ui:DropdownField label="Shape Type" name="ShapeType" choices="Torus,Spiral,Ring,Line" style="color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                <ui:Slider label="Size" value="1" high-value="10" name="Size" low-value="0.5" style="opacity: 1; color: rgb(255, 255, 255); align-items: auto;" />
+                <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                <ui:Slider label="Rotation X" value="0" high-value="180" name="RotX" low-value="-180" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Rotation Y" value="0" high-value="180" name="RotY" low-value="-180" style="flex-direction: row; color: rgb(255, 255, 255);" />
+                <ui:Slider label="Rotation Z" value="0" high-value="180" name="RotZ" low-value="-180" style="color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                <ui:Slider label="Postion X" value="0" high-value="10" name="PosX" low-value="-10" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Postion Y" value="0" high-value="10" name="PosY" low-value="-10" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Postion Z" value="0" high-value="10" name="PosZ" low-value="-10" style="opacity: 1; color: rgb(255, 255, 255);" />
+            </ui:GroupBox>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0; flex-shrink: 1; width: 280px;">
+            <ui:GroupBox name="GroupBox" style="right: 0; height: 323px; width: 100%; flex-grow: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; left: auto; top: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.24);">
+                <ui:Toggle label="Spatialize" name="Spatialize" style="color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                <ui:Toggle label="Reverb Toggle" name="ReverbToggle" value="true" style="color: rgb(255, 255, 255);" />
+                <ui:DropdownField label="Reverb Preset" name="ReverbPreset" style="color: rgb(255, 255, 255); justify-content: space-around; align-self: stretch; align-items: flex-start; flex-direction: row;" />
+                <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                <ui:Slider label="Room Size" value="-2000" high-value="0" name="RoomSize" low-value="-10000" enabled="false" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Reverb Level" value="-2000" high-value="2000" name="ReverbLevel" low-value="-10000" enabled="false" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Reverb Delay" value="0.02" high-value="0.1" name="ReverbDelay" low-value="0" enabled="false" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Reflection" value="-1000" high-value="1000" name="Reflection" low-value="-10000" enabled="false" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Reflection Delay" value="0.02" high-value="0.3" name="ReflectionDelay" low-value="0" enabled="false" style="color: rgb(255, 255, 255);" />
+            </ui:GroupBox>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

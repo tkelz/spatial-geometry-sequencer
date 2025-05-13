@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Bead Settings")]
     public BeadMover beadMover;
+    public AudioSource beadAudio;
 
     [Header("Audio Settings")]
     public AudioReverbZone audioReverbZone;
@@ -60,5 +61,14 @@ public class GameManager : MonoBehaviour
     public void EnableAudioReverb(bool enable)
     {
         audioReverbZone.enabled = enable;
+    }
+
+    public void ChangeReverbPreset(AudioReverbPreset preset)
+    {
+        audioReverbZone.reverbPreset = preset;
+    }
+
+    public void EnableSpatialize(bool enable) {
+        beadAudio.spatialize = enable;
     }
 }
