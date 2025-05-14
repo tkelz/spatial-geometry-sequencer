@@ -10,7 +10,12 @@ public class FileManager : MonoBehaviour
     public GameManager gameManager;
 
     public void OpenDialog() {
-        var paths = StandaloneFileBrowser.OpenFilePanel("Open Audio File", "", "wav", false);
+        var extensions = new [] {
+            // new ExtensionFilter("Image Files", "png", "jpg", "jpeg" ),
+            new ExtensionFilter("Sound Files", "mp3", "wav" ),
+            // new ExtensionFilter("All Files", "*" ),
+        };
+        var paths = StandaloneFileBrowser.OpenFilePanel("Open Audio File", "", extensions, false);
         if (paths.Length > 0) {
             StartCoroutine(LoadAndPlay(new System.Uri(paths[0]).AbsoluteUri));
         }
