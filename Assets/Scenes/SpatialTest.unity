@@ -1381,7 +1381,7 @@ AudioReverbZone:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479999782}
-  m_Enabled: 1
+  m_Enabled: 0
   m_MinDistance: 1
   m_MaxDistance: 15
   m_ReverbPreset: 9
@@ -3949,6 +3949,7 @@ GameObject:
   - component: {fileID: 1991077923}
   - component: {fileID: 1991077922}
   - component: {fileID: 1991077921}
+  - component: {fileID: 1991077924}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3991,6 +3992,8 @@ MonoBehaviour:
   beadMover: {fileID: 2102461411}
   beadAudio: {fileID: 2102461409}
   audioReverbZone: {fileID: 1479999783}
+  fileManager: {fileID: 1991077924}
+  uiManager: {fileID: 1991077921}
 --- !u!4 &1991077923
 Transform:
   m_ObjectHideFlags: 0
@@ -4006,6 +4009,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1991077924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991077920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4db0917323cd2d4ba5e9e474089eb1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1991077922}
 --- !u!1 &2029276596
 GameObject:
   m_ObjectHideFlags: 0
@@ -4073,7 +4089,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 1
   Mute: 0
-  Spatialize: 0
+  Spatialize: 1
   SpatializePostEffects: 1
   Priority: 128
   DopplerLevel: 1

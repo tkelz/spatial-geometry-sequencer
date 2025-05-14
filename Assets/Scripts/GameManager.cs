@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour
     [Header("Audio Settings")]
     public AudioReverbZone audioReverbZone;
 
+    [Header("File Dialog Settings")]
+    public FileManager fileManager;
+
+    [Header("UI Settings")]
+    public PathTransformUIController uiManager;
+
     public string activeShapeName {set{ _activeShapeName = value;} get { return _activeShapeName;}}
 
     string _activeShapeName = "Torus";
@@ -70,5 +76,13 @@ public class GameManager : MonoBehaviour
 
     public void EnableSpatialize(bool enable) {
         beadAudio.spatialize = enable;
+    }
+
+    public void OpenFile() {
+        fileManager.OpenDialog();
+    }
+
+    public void ChangeAudioName(string name) {
+        uiManager.ChangeMusicName(name);
     }
 }

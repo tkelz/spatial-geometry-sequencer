@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class CameraManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if (inputManager.inputMouseLClick)
+        if (inputManager.inputMouseLClick && !EventSystem.current.IsPointerOverGameObject())
         {
             if(dragOrigin == Vector2.zero) {
                 dragOrigin = inputManager.inputLook;

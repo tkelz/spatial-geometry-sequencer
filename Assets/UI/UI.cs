@@ -10,7 +10,8 @@ public class PathTransformUIController : MonoBehaviour
     [Header("Game Manager")]
     public GameManager gameManager;
 
-    // Runtime references to our sliders
+    Button musicOpenBtn;
+
     Slider beadSpeed;
     DropdownField shapeDropdown;
     Slider posX, posY, posZ;
@@ -34,6 +35,7 @@ public class PathTransformUIController : MonoBehaviour
         // Grab the root VisualElement
         var root = uiDocument.rootVisualElement;
 
+        musicOpenBtn = root.Q<Button>("MusicOpenBtn");
         spatializeToggle = root.Q<Toggle>("Spatialize");
         beadSpeed = root.Q<Slider>("BeadSpeed");
         shapeDropdown = root.Q<DropdownField>("ShapeType");
@@ -57,6 +59,7 @@ public class PathTransformUIController : MonoBehaviour
         size = root.Q<Slider>("Size");
 
         // Hook up callbacks
+        musicOpenBtn.RegisterCallback<ClickEvent>(evt => gameManager.OpenFile());
         beadSpeed.RegisterValueChangedCallback(evt =>
         {
             // Change the speed of the bead
@@ -154,5 +157,13 @@ public class PathTransformUIController : MonoBehaviour
         size.value = s; size.label = $"Size: {s:F2}";
 
         shapeDropdown.value = gameManager.activeShapeName;
+    }
+
+    public void ChangeMusicName(string name) {
+        if(name.Length > 6) {
+            musicOpenBtn.text = name.Substring(0, 6) + "...";
+        } else {
+            musicOpenBtn.text = name;
+        }
     }
 }
