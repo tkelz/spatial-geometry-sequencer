@@ -2,6 +2,7 @@
     --main-color: rgba(0, 162, 255, 0.8);
     --second-color: rgba(0, 162, 255, 0.2);
     --highlight-color: rgba(0, 174, 255, 0.9);
+    --disabled-opacity: 0.3;
 }
 
 .unity-base-field__label {
@@ -14,6 +15,7 @@
 
 /* Button CSS */
 Button.btn-primary {
+    color: white;
     background-color: var(--second-color);
     border-radius: 6px;
     border-color: var(--second-color);
@@ -22,6 +24,11 @@ Button.btn-primary:hover:enabled,
 Button.btn-primary:active:enabled {
     background-color: var(--second-color);
     border-color: var(--highlight-color);
+}
+Button.btn-primary:disabled {
+    background-color: var(--second-color);
+    border-color: var(--highlight-color);
+    opacity: var(--disabled-opacity);
 }
 
 /* Toggle CSS */
@@ -43,6 +50,13 @@ Button.btn-primary:active:enabled {
     border-color: var(--highlight-color);
 }
 
+.unity-toggle .unity-toggle__input:disabled .unity-toggle__checkmark,
+.unity-toggle .unity-toggle__input:checked:disabled .unity-toggle__checkmark {
+    background-color: var(--second-color);
+    border-color: var(--highlight-color);
+    opacity: var(--disabled-opacity);
+}
+
 /* DropdownField CSS */
 DropdownField .unity-base-field__input {
     border-radius: 6px;
@@ -55,6 +69,12 @@ DropdownField .unity-base-field__input {
  {
     background-color: var(--second-color);
     border-color: var(--highlight-color);
+}
+
+.unity-base-popup-field:disabled .unity-base-field__input {
+    background-color: var(--second-color);
+    border-color: var(--highlight-color);
+    opacity: var(--disabled-opacity);
 }
 
 .unity-base-popup-field__arrow {
@@ -87,7 +107,40 @@ Slider:active:enabled .unity-base-slider__dragger {
     top: 18px;
     width: 20px;
     height: 20px;
-    background-color:var(--main-color);
+    background-color: var(--main-color);
     border-color: var(--second-color);
     border-radius: 100%;
+}
+
+/* Scroll bar */
+.unity-scroller--vertical > .unity-scroller__low-button {
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+    -unity-background-image-tint-color: var(--main-color);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.unity-scroller--vertical > .unity-scroller__high-button {
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+    -unity-background-image-tint-color: var(--main-color);
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.unity-scroller--vertical .unity-base-slider__dragger {
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+}
+
+.unity-scroller--vertical:hover:enabled .unity-base-slider__dragger {
+    background-color:var(--main-color);
+}
+
+.unity-scroller--vertical .unity-base-slider__tracker,
+.unity-scroller--vertical:hover:enabled .unity-base-slider__tracker {
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+    opacity: 0.2;
 }

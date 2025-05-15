@@ -33,8 +33,7 @@ public class CameraManager : MonoBehaviour
         }
         mainCamera.LookAt(Vector3.zero);
 
-
-        if(inputManager.inputZoom != Vector2.zero) {
+        if(inputManager.inputZoom != Vector2.zero && !EventSystem.current.IsPointerOverGameObject()) {
             float zoom = inputManager.inputZoom.y;
             if(
                 zoom > 0 && Vector3.Distance(mainCamera.position, Vector3.zero) > minZoom ||

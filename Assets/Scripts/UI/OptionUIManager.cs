@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[AddComponentMenu("SGS/Path Transform UIController (UITK)")]
-public class PathTransformUIController : MonoBehaviour
+[AddComponentMenu("SGS/Option UI Manager (OUM)")]
+public class OptionUIManager : MonoBehaviour
 {
+    public static OptionUIManager Instance;
+
     [Header("The UI Document that holds your sliders")]
     public UIDocument uiDocument;
 
@@ -12,6 +14,7 @@ public class PathTransformUIController : MonoBehaviour
 
     Button musicOpenBtn;
 
+    GroupBox stemOptions;
     Slider beadSpeed;
     DropdownField shapeDropdown;
     Slider posX, posY, posZ;
@@ -23,17 +26,25 @@ public class PathTransformUIController : MonoBehaviour
     DropdownField reverbDropdown;
     Slider reverbRoomSize, reverbLevel, reverbDelay, reverbReflection, reverbReflectionDelay;
 
+    StemItem stemItem;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void OnEnable()
     {
         if (uiDocument == null || gameManager == null)
         {
-            Debug.LogError("PathTransformUIController: Assign both a UIDocument and GameManager!");
+            Debug.LogError("OptionUIManager: Assign both a UIDocument and GameManager!");
             enabled = false;
             return;
         }
 
         // Grab the root VisualElement
         var root = uiDocument.rootVisualElement;
+        stemOptions = root.Q<GroupBox>("StemOptions");
 
         musicOpenBtn = root.Q<Button>("MusicOpenBtn");
         spatializeToggle = root.Q<Toggle>("Spatialize");
@@ -59,61 +70,59 @@ public class PathTransformUIController : MonoBehaviour
         size = root.Q<Slider>("Size");
 
         // Hook up callbacks
-        musicOpenBtn.RegisterCallback<ClickEvent>(evt => gameManager.OpenFile());
+        musicOpenBtn.RegisterCallback<ClickEvent>(evt => stemItem.OpenFile());
         beadSpeed.RegisterValueChangedCallback(evt =>
         {
             // Change the speed of the bead
-            gameManager.ChangeBeadSpeed(evt.newValue);
-            // Update the slider label
-            beadSpeed.label = $"Bead Speed: {evt.newValue:F2}";
+            stemItem.ChangeBeadSpeed(evt.newValue);
         });
         shapeDropdown.RegisterValueChangedCallback(evt =>
         {
             // Change the shape of the path
-            gameManager.ChangeShape(evt.newValue);
+            stemItem.ChangeShape(evt.newValue);
         });
 
         posX.RegisterValueChangedCallback(evt =>
         {
-            gameManager.ChangeShapePosition(new Vector3(evt.newValue, posY.value, posZ.value));
+            stemItem.ChangeShapePosition(new Vector3(evt.newValue, posY.value, posZ.value));
             posX.label = $"Pos X: {evt.newValue:F2}";
         });
         posY.RegisterValueChangedCallback(evt =>
         {
-            gameManager.ChangeShapePosition(new Vector3(posX.value, evt.newValue, posZ.value));
+            stemItem.ChangeShapePosition(new Vector3(posX.value, evt.newValue, posZ.value));
             posY.label = $"Pos Y: {evt.newValue:F2}";
         });
         posZ.RegisterValueChangedCallback(evt =>
         {
-            gameManager.ChangeShapePosition(new Vector3(posX.value, posY.value, evt.newValue));
+            stemItem.ChangeShapePosition(new Vector3(posX.value, posY.value, evt.newValue));
             posZ.label = $"Pos Z: {evt.newValue:F2}";
         });
 
         rotX.RegisterValueChangedCallback(evt =>
         {
-            gameManager.ChangeShapeRotation(new Vector3(evt.newValue, rotY.value, rotZ.value));
+            stemItem.ChangeShapeRotation(new Vector3(evt.newValue, rotY.value, rotZ.value));
             rotX.label = $"Rot X: {evt.newValue:F1}";
         });
         rotY.RegisterValueChangedCallback(evt =>
         {
-            gameManager.ChangeShapeRotation(new Vector3(rotX.value, evt.newValue, rotZ.value));
+            stemItem.ChangeShapeRotation(new Vector3(rotX.value, evt.newValue, rotZ.value));
             rotY.label = $"Rot Y: {evt.newValue:F1}";
         });
         rotZ.RegisterValueChangedCallback(evt =>
         {
-            gameManager.ChangeShapeRotation(new Vector3(rotX.value, rotY.value, evt.newValue));
+            stemItem.ChangeShapeRotation(new Vector3(rotX.value, rotY.value, evt.newValue));
             rotZ.label = $"Rot Z: {evt.newValue:F1}";
         });
 
         // Update the size slider callback with clamping and incremental scaling
         size.RegisterValueChangedCallback(evt =>
         {
-            gameManager.ChangeShapeScale(evt.newValue);
+            stemItem.ChangeShapeScale(evt.newValue);
             // Update the slider label
             size.label = $"Size: {evt.newValue:F2}";
         });
 
-        spatializeToggle.RegisterValueChangedCallback(evt => gameManager.EnableSpatialize(evt.newValue));
+        spatializeToggle.RegisterValueChangedCallback(evt => stemItem.EnableSpatialize(evt.newValue));
 
         // Reverb
         reverbToggle.RegisterValueChangedCallback(evt => gameManager.EnableAudioReverb(evt.newValue));
@@ -133,35 +142,42 @@ public class PathTransformUIController : MonoBehaviour
             reverbReflection.value = gameManager.audioReverbZone.reflections;
             reverbReflectionDelay.value = gameManager.audioReverbZone.reflectionsDelay;
         });
-
-        // Initialize UI to match current transform
-        RefreshUI();
     }
 
-    /// <summary>
-    /// Pull the current transform values into the sliders.
-    /// </summary>
-    public void RefreshUI()
-    {
-        var p = gameManager.shapeParent.position;
+    public void SetStemData(StemItem stemItem) {
+        if(!stemItem) {
+            stemOptions.SetEnabled(false);
+            return;
+        }
+        
+        stemOptions.SetEnabled(true);
+
+        this.stemItem = stemItem;
+        var p = stemItem.shapeParent.position;
         posX.value = p.x; posX.label = $"Pos X: {p.x:F2}";
         posY.value = p.y; posY.label = $"Pos Y: {p.y:F2}";
         posZ.value = p.z; posZ.label = $"Pos Z: {p.z:F2}";
 
-        var r = gameManager.shapeParent.localEulerAngles;
+        var r = stemItem.shapeParent.localEulerAngles;
         rotX.value = r.x; rotX.label = $"Rot X: {r.x:F1}";
         rotY.value = r.y; rotY.label = $"Rot Y: {r.y:F1}";
         rotZ.value = r.z; rotZ.label = $"Rot Z: {r.z:F1}";
 
-        float s = gameManager.shapeParent.localScale.x;
+        float s = stemItem.shapeParent.localScale.x;
         size.value = s; size.label = $"Size: {s:F2}";
 
-        shapeDropdown.value = gameManager.activeShapeName;
+        shapeDropdown.value = stemItem.activeShapeName;
+
+        ChangeMusicName(stemItem.audioName);
+
+        spatializeToggle.value = stemItem.beadAudioSource.spatialize;
+
+        beadSpeed.value = stemItem.bead.bpm;
     }
 
     public void ChangeMusicName(string name) {
-        if(name.Length > 6) {
-            musicOpenBtn.text = name.Substring(0, 6) + "...";
+        if(name.Length > 13) {
+            musicOpenBtn.text = name.Substring(0, 13) + "...";
         } else {
             musicOpenBtn.text = name;
         }

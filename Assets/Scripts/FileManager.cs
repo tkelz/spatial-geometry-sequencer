@@ -7,7 +7,7 @@ using SFB;
 
 public class FileManager : MonoBehaviour
 {
-    public GameManager gameManager;
+    public StemItem stemItem;
 
     public void OpenDialog() {
         var extensions = new [] {
@@ -40,8 +40,8 @@ public class FileManager : MonoBehaviour
     IEnumerator LoadAndPlay(string url) {
         var loader = new WWW(url);
         yield return loader;
-        gameManager.beadAudio.clip = loader.GetAudioClip(false, false);
-        gameManager.beadAudio.Play();
-        gameManager.ChangeAudioName(Path.GetFileNameWithoutExtension(url));
+        stemItem.beadAudioSource.clip = loader.GetAudioClip(false, false);
+        stemItem.beadAudioSource.Play();
+        stemItem.ChangeAudioName(Path.GetFileNameWithoutExtension(url));
     }
 }
