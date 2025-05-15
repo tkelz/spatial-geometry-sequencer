@@ -535,7 +535,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stemPrefab: {fileID: 9040945619516744408, guid: 1a5c31368b833b949896bddd3410b0b0, type: 3}
   stems: []
-  bpm: 120
 --- !u!4 &1393181208
 Transform:
   m_ObjectHideFlags: 0
@@ -1024,7 +1023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad49ea98f274fc8479ecec778d5d6324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beadAudio: {fileID: 0}
   audioReverbZone: {fileID: 1479999783}
 --- !u!4 &1991077923
 Transform:
@@ -1068,7 +1066,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2127034521}
   - component: {fileID: 2127034519}
-  - component: {fileID: 2127034522}
   m_Layer: 0
   m_Name: Audio Listener
   m_TagString: MainCamera
@@ -1099,26 +1096,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2127034522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2127034518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 113e4aa2cd3db44d1ac0cb7e9794964b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  globalGainDb: 0
-  occlusionMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  stereoSpeakerModeEnabled: 0
-  recorderSeamless: 0
-  recorderSourceTag: Untagged
-  recorderFoldout: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
