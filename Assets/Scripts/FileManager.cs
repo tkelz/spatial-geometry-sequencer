@@ -1,8 +1,6 @@
 using System.IO;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using SFB;
 
 public class FileManager : MonoBehaviour

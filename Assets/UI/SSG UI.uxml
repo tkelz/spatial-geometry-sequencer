@@ -1,4 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="TorusOptionUI" src="project://database/Assets/UI/PathTorusOptionUI.uxml?fileID=9197481963319205126&amp;guid=f53e1df5febfaff40a6fefe012dc20d0&amp;type=3#PathTorusOptionUI" />
+    <ui:Template name="PathRingOptionUI" src="project://database/Assets/UI/PathRingOptionUI.uxml?fileID=9197481963319205126&amp;guid=3e5de6aa46340ce4c8629576ae777ca6&amp;type=3#PathRingOptionUI" />
+    <ui:Template name="PathLineOptionUI" src="project://database/Assets/UI/PathLineOptionUI.uxml?fileID=9197481963319205126&amp;guid=fb6288134cb173d4fa0ab369d44173f2&amp;type=3#PathLineOptionUI" />
+    <ui:Template name="PathSpiralOptionUI" src="project://database/Assets/UI/PathSpiralOptionUI.uxml?fileID=9197481963319205126&amp;guid=39dbf1b3e1d513b4080ba01d370f25a5&amp;type=3#PathSpiralOptionUI" />
     <Style src="project://database/Assets/UI/Button1.uss?fileID=7433441132597879392&amp;guid=ea9e3f04f753e694d8eff15d19b288ff&amp;type=3#Button1" />
     <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1;">
         <ui:ScrollView style="width: 280px; flex-grow: 1; background-color: rgba(0, 0, 0, 0.78);">
@@ -12,6 +16,10 @@
                 <ui:Slider label="Bead Speed" value="10" high-value="100" name="BeadSpeed" low-value="1" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
                 <ui:DropdownField label="Shape Type" name="ShapeType" choices="Torus,Spiral,Ring,Line" style="color: rgb(255, 255, 255);" />
+                <ui:Instance template="TorusOptionUI" name="TorusOption" style="display: none;" />
+                <ui:Instance template="PathRingOptionUI" name="RingOption" style="display: none;" />
+                <ui:Instance template="PathLineOptionUI" name="LineOption" style="display: none;" />
+                <ui:Instance template="PathSpiralOptionUI" name="SpiralOption" style="display: none;" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
                 <ui:Slider label="Size" value="1" high-value="5" name="Size" low-value="0.1" style="opacity: 1; color: rgb(255, 255, 255); align-items: auto;" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />

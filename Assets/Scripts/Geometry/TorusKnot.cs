@@ -42,7 +42,7 @@ public class TorusKnotGenerator : MonoBehaviour
     /// </summary>
     public Vector3[] GetPoints() => _points;
 
-    private void Generate()
+    public void Generate()
     {
         _points = new Vector3[segments];
         float twoPi = Mathf.PI * 2f;
@@ -56,11 +56,11 @@ public class TorusKnotGenerator : MonoBehaviour
             float cosQ = Mathf.Cos(q * t);
             float sinQ = Mathf.Sin(q * t);
 
-            // (R + r * cos(q·t))·cos(p·t)
+            // (R + r * cos(qï¿½t))ï¿½cos(pï¿½t)
             float x = (radius + tube * cosQ) * cosP;
-            // r·sin(q·t)
+            // rï¿½sin(qï¿½t)
             float y = tube * sinQ;
-            // (R + r * cos(q·t))·sin(p·t)
+            // (R + r * cos(qï¿½t))ï¿½sin(pï¿½t)
             float z = (radius + tube * cosQ) * sinP;
 
             _points[i] = new Vector3(x, y, z);

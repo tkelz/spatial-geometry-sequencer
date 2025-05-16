@@ -34,14 +34,14 @@ public class WaveLineGenerator : MonoBehaviour
     {
         _lr = GetComponent<LineRenderer>();
         _lr.useWorldSpace = false;  // draw in local space so transforms apply
-        GenerateWave();
+        Generate();
     }
 
     void OnValidate()
     {
         if (_lr == null) _lr = GetComponent<LineRenderer>();
         _lr.useWorldSpace = false;
-        GenerateWave();
+        Generate();
     }
 
     void Update()
@@ -53,7 +53,7 @@ public class WaveLineGenerator : MonoBehaviour
             pointsPerWave != _lastPointsPerWave ||
             loop != _lastLoop)
         {
-            GenerateWave();
+            Generate();
         }
     }
 
@@ -62,7 +62,7 @@ public class WaveLineGenerator : MonoBehaviour
     /// </summary>
     public Vector3[] GetPoints() => _points;
 
-    private void GenerateWave()
+    public void Generate()
     {
         // Cache parameters
         _lastLength = length;

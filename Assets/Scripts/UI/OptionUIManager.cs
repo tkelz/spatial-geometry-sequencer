@@ -28,6 +28,19 @@ public class OptionUIManager : MonoBehaviour
 
     StemItem stemItem;
 
+    // Torus Options
+    SliderInt torusP, torusQ, torusSegments;
+    Slider torusRadius, torusTube;
+    // Spiral Options
+    Slider spiralTurns, spiralSpacing, spiralStartWidth, spiralEndWidth;
+    SliderInt spiralPointsPerTurn;
+    // Circle Options
+    Slider circleRadius;
+    SliderInt circlePointCount;
+    // Line Options
+    Slider lineLength, lineAmplitude;
+    SliderInt lineWaveCount, linePointsPerWave;
+
     void Awake()
     {
         Instance = this;
@@ -69,6 +82,27 @@ public class OptionUIManager : MonoBehaviour
 
         size = root.Q<Slider>("Size");
 
+        // Torus options
+        torusP = root.Q<SliderInt>("TorusP");
+        torusQ = root.Q<SliderInt>("TorusQ");
+        torusSegments = root.Q<SliderInt>("TorusSegments");
+        torusRadius = root.Q<Slider>("TorusRadius");
+        torusTube = root.Q<Slider>("TorusTube");
+        // Spiral options
+        spiralTurns = root.Q<Slider>("SpiralTurns");
+        spiralSpacing = root.Q<Slider>("SpiralSpacing");
+        spiralStartWidth = root.Q<Slider>("SpiralStartWidth");
+        spiralEndWidth = root.Q<Slider>("SpiralEndWidth");
+        spiralPointsPerTurn = root.Q<SliderInt>("SpiralPointsPerTurn");
+        // Circle options
+        circleRadius = root.Q<Slider>("RingRadius");
+        circlePointCount = root.Q<SliderInt>("RingPointCount");
+        // Line options
+        lineLength = root.Q<Slider>("LineLength");
+        lineAmplitude = root.Q<Slider>("LineAmplitude");
+        lineWaveCount = root.Q<SliderInt>("LineWaveCount");
+        linePointsPerWave = root.Q<SliderInt>("LinePointsPerWave");
+
         // Hook up callbacks
         musicOpenBtn.RegisterCallback<ClickEvent>(evt => stemItem.OpenFile());
         beadSpeed.RegisterValueChangedCallback(evt =>
@@ -80,6 +114,105 @@ public class OptionUIManager : MonoBehaviour
         {
             // Change the shape of the path
             stemItem.ChangeShape(evt.newValue);
+
+            // Update the shape dropdown label
+            UpdatePathOptions();
+        });
+        torusP.RegisterValueChangedCallback(evt =>
+        {
+            TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
+            torusKnotGenerator.p = evt.newValue;
+            torusKnotGenerator.Generate();
+        });
+        torusQ.RegisterValueChangedCallback(evt =>
+        {
+            TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
+            torusKnotGenerator.q = evt.newValue;
+            torusKnotGenerator.Generate();
+        });
+        torusSegments.RegisterValueChangedCallback(evt =>
+        {
+            TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
+            torusKnotGenerator.segments = evt.newValue;
+            torusKnotGenerator.Generate();
+        });
+        torusRadius.RegisterValueChangedCallback(evt =>
+        {
+            TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
+            torusKnotGenerator.radius = evt.newValue;
+            torusKnotGenerator.Generate();
+        });
+        torusTube.RegisterValueChangedCallback(evt =>
+        {
+            TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
+            torusKnotGenerator.tube = evt.newValue;
+            torusKnotGenerator.Generate();
+        });
+        spiralTurns.RegisterValueChangedCallback(evt =>
+        {
+            SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
+            spiral.turns = evt.newValue;
+            spiral.Regenerate();
+        });
+        spiralSpacing.RegisterValueChangedCallback(evt =>
+        {
+            SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
+            spiral.spacing = evt.newValue;
+            spiral.Regenerate();
+        });
+        spiralStartWidth.RegisterValueChangedCallback(evt =>
+        {
+            SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
+            spiral.widthStart = evt.newValue;
+            spiral.Regenerate();
+        });
+        spiralEndWidth.RegisterValueChangedCallback(evt =>
+        {
+            SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
+            spiral.widthEnd = evt.newValue;
+            spiral.Regenerate();
+        });
+        spiralPointsPerTurn.RegisterValueChangedCallback(evt =>
+        {
+            SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
+            spiral.pointsPerTurn = evt.newValue;
+            spiral.Regenerate();
+        });
+        circleRadius.RegisterValueChangedCallback(evt =>
+        {
+            CirclePathGenerator circle = stemItem.shapeParent.GetComponentInChildren<CirclePathGenerator>();
+            circle.radius = evt.newValue;
+            circle.Generate();
+        });
+        circlePointCount.RegisterValueChangedCallback(evt =>
+        {
+            CirclePathGenerator circle = stemItem.shapeParent.GetComponentInChildren<CirclePathGenerator>();
+            circle.pointCount = evt.newValue;
+            circle.Generate();
+        });
+        lineLength.RegisterValueChangedCallback(evt =>
+        {
+            WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
+            linePath.length = evt.newValue;
+            linePath.Generate();
+        });
+        lineAmplitude.RegisterValueChangedCallback(evt =>
+        {
+            WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
+            linePath.amplitude = evt.newValue;
+            linePath.Generate();
+        });
+        lineWaveCount.RegisterValueChangedCallback(evt =>
+        {
+            WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
+            linePath.waveCount = evt.newValue;
+            linePath.Generate();
+        });
+        linePointsPerWave.RegisterValueChangedCallback(evt =>
+        {
+            WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
+            linePath.pointsPerWave = evt.newValue;
+            linePath.Generate();
         });
 
         posX.RegisterValueChangedCallback(evt =>
@@ -144,12 +277,14 @@ public class OptionUIManager : MonoBehaviour
         });
     }
 
-    public void SetStemData(StemItem stemItem) {
-        if(!stemItem) {
+    public void SetStemData(StemItem stemItem)
+    {
+        if (!stemItem)
+        {
             stemOptions.SetEnabled(false);
             return;
         }
-        
+
         stemOptions.SetEnabled(true);
 
         this.stemItem = stemItem;
@@ -173,12 +308,65 @@ public class OptionUIManager : MonoBehaviour
         spatializeToggle.value = stemItem.beadAudioSource.spatialize;
 
         beadSpeed.value = stemItem.bead.bpm;
+        
+        UpdatePathOptions();
     }
 
-    public void ChangeMusicName(string name) {
-        if(name.Length > 13) {
+    void UpdatePathOptions()
+    {
+        // Show the new shape options
+        var root = uiDocument.rootVisualElement;
+        root.Q<TemplateContainer>("TorusOption").style.display = DisplayStyle.None;
+        root.Q<TemplateContainer>("SpiralOption").style.display = DisplayStyle.None;
+        root.Q<TemplateContainer>("LineOption").style.display = DisplayStyle.None;
+        root.Q<TemplateContainer>("RingOption").style.display = DisplayStyle.None;
+
+        if (shapeDropdown.value == "Torus")
+        {
+            root.Q<TemplateContainer>("TorusOption").style.display = DisplayStyle.Flex;
+            TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
+            torusP.value = torusKnotGenerator.p;
+            torusQ.value = torusKnotGenerator.q;
+            torusSegments.value = torusKnotGenerator.segments;
+            torusRadius.value = torusKnotGenerator.radius;
+            torusTube.value = torusKnotGenerator.tube;
+        }
+        else if (shapeDropdown.value == "Spiral")
+        {
+            root.Q<TemplateContainer>("SpiralOption").style.display = DisplayStyle.Flex;
+            SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
+            spiralTurns.value = spiral.turns;
+            spiralSpacing.value = spiral.spacing;
+            spiralStartWidth.value = spiral.widthStart;
+            spiralEndWidth.value = spiral.widthEnd;
+            spiralPointsPerTurn.value = spiral.pointsPerTurn;
+        }
+        else if (shapeDropdown.value == "Line")
+        {
+            root.Q<TemplateContainer>("LineOption").style.display = DisplayStyle.Flex;
+            WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
+            lineLength.value = linePath.length;
+            lineAmplitude.value = linePath.amplitude;
+            lineWaveCount.value = linePath.waveCount;
+            linePointsPerWave.value = linePath.pointsPerWave;
+        }
+        else if (shapeDropdown.value == "Ring")
+        {
+            root.Q<TemplateContainer>("RingOption").style.display = DisplayStyle.Flex;
+            CirclePathGenerator circle = stemItem.shapeParent.GetComponentInChildren<CirclePathGenerator>();
+            circleRadius.value = circle.radius;
+            circlePointCount.value = circle.pointCount;
+        }
+    }
+
+    public void ChangeMusicName(string name)
+    {
+        if (name.Length > 13)
+        {
             musicOpenBtn.text = name.Substring(0, 13) + "...";
-        } else {
+        }
+        else
+        {
             musicOpenBtn.text = name;
         }
     }
