@@ -9,9 +9,6 @@ public class OptionUIManager : MonoBehaviour
     [Header("The UI Document that holds your sliders")]
     public UIDocument uiDocument;
 
-    [Header("Game Manager")]
-    public GameManager gameManager;
-
     Button musicOpenBtn;
 
     GroupBox stemOptions;
@@ -25,6 +22,10 @@ public class OptionUIManager : MonoBehaviour
     Toggle reverbToggle;
     DropdownField reverbDropdown;
     Slider reverbRoomSize, reverbLevel, reverbDelay, reverbReflection, reverbReflectionDelay;
+
+    Button recordBtn, exportBtn;
+    IntegerField recordSeconds;
+    ProgressBar recordingProgressBar;
 
     StemItem stemItem;
 
@@ -48,9 +49,9 @@ public class OptionUIManager : MonoBehaviour
 
     void OnEnable()
     {
-        if (uiDocument == null || gameManager == null)
+        if (uiDocument == null)
         {
-            Debug.LogError("OptionUIManager: Assign both a UIDocument and GameManager!");
+            Debug.LogError("OptionUIManager: Assign both a UIDocument!");
             enabled = false;
             return;
         }
@@ -103,12 +104,19 @@ public class OptionUIManager : MonoBehaviour
         lineWaveCount = root.Q<SliderInt>("LineWaveCount");
         linePointsPerWave = root.Q<SliderInt>("LinePointsPerWave");
 
+        // Export Options
+        recordBtn = root.Q<Button>("RecordBtn");
+        exportBtn = root.Q<Button>("ExportBtn");
+        recordSeconds = root.Q<IntegerField>("RecordSeconds");
+        recordingProgressBar = root.Q<ProgressBar>("RecordingProgress");
+
         // Hook up callbacks
-        musicOpenBtn.RegisterCallback<ClickEvent>(evt => stemItem.OpenFile());
+        musicOpenBtn.RegisterCallback<ClickEvent>(evt => stemItem.OpenDialog());
         beadSpeed.RegisterValueChangedCallback(evt =>
         {
             // Change the speed of the bead
             stemItem.ChangeBeadSpeed(evt.newValue);
+            beadSpeed.label = $"BPM: {evt.newValue:F2}";
         });
         shapeDropdown.RegisterValueChangedCallback(evt =>
         {
@@ -258,7 +266,7 @@ public class OptionUIManager : MonoBehaviour
         spatializeToggle.RegisterValueChangedCallback(evt => stemItem.EnableSpatialize(evt.newValue));
 
         // Reverb
-        reverbToggle.RegisterValueChangedCallback(evt => gameManager.EnableAudioReverb(evt.newValue));
+        reverbToggle.RegisterValueChangedCallback(evt => StemManager.Instance.EnableAudioReverb(evt.newValue));
         foreach (var preset in System.Enum.GetValues(typeof(AudioReverbPreset)))
         {
             reverbDropdown.choices.Add(preset.ToString());
@@ -267,14 +275,20 @@ public class OptionUIManager : MonoBehaviour
         reverbDropdown.RegisterValueChangedCallback(evt =>
         {
             AudioReverbPreset preset = (AudioReverbPreset)System.Enum.Parse(typeof(AudioReverbPreset), evt.newValue);
-            gameManager.ChangeReverbPreset(preset);
+            StemManager.Instance.ChangeReverbPreset(preset);
 
-            reverbRoomSize.value = gameManager.audioReverbZone.room;
-            reverbLevel.value = gameManager.audioReverbZone.reverb;
-            reverbDelay.value = gameManager.audioReverbZone.reverbDelay;
-            reverbReflection.value = gameManager.audioReverbZone.reflections;
-            reverbReflectionDelay.value = gameManager.audioReverbZone.reflectionsDelay;
+            reverbRoomSize.value = StemManager.Instance.audioReverbZone.room;
+            reverbLevel.value = StemManager.Instance.audioReverbZone.reverb;
+            reverbDelay.value = StemManager.Instance.audioReverbZone.reverbDelay;
+            reverbReflection.value = StemManager.Instance.audioReverbZone.reflections;
+            reverbReflectionDelay.value = StemManager.Instance.audioReverbZone.reflectionsDelay;
         });
+
+        // Export
+        recordBtn.RegisterCallback<ClickEvent>(evt => ExportManager.Instance.StartRecording(recordSeconds.value));
+        exportBtn.RegisterCallback<ClickEvent>(evt => ExportManager.Instance.ExportAudio());
+        exportBtn.SetEnabled(false);
+        recordingProgressBar.value = 0;
     }
 
     public void SetStemData(StemItem stemItem)
@@ -308,7 +322,8 @@ public class OptionUIManager : MonoBehaviour
         spatializeToggle.value = stemItem.beadAudioSource.spatialize;
 
         beadSpeed.value = stemItem.bead.bpm;
-        
+        beadSpeed.label = $"BPM: {stemItem.bead.bpm:F2}";
+
         UpdatePathOptions();
     }
 
@@ -359,6 +374,17 @@ public class OptionUIManager : MonoBehaviour
         }
     }
 
+    public void UpdateReverbSettings()
+    {
+        reverbToggle.value = StemManager.Instance.audioReverbZone.enabled;
+        reverbDropdown.value = StemManager.Instance.audioReverbZone.reverbPreset.ToString();
+        reverbRoomSize.value = StemManager.Instance.audioReverbZone.room;
+        reverbLevel.value = StemManager.Instance.audioReverbZone.reverb;
+        reverbDelay.value = StemManager.Instance.audioReverbZone.reverbDelay;
+        reverbReflection.value = StemManager.Instance.audioReverbZone.reflections;
+        reverbReflectionDelay.value = StemManager.Instance.audioReverbZone.reflectionsDelay;
+    }
+
     public void ChangeMusicName(string name)
     {
         if (name.Length > 13)
@@ -369,5 +395,22 @@ public class OptionUIManager : MonoBehaviour
         {
             musicOpenBtn.text = name;
         }
+    }
+
+    public void EnableExportOptions(bool enabled)
+    {
+        exportBtn.SetEnabled(enabled);
+        recordBtn.SetEnabled(enabled);
+        recordSeconds.SetEnabled(enabled);
+    }
+
+    public void EnableExportBtn(bool enabled)
+    {
+        exportBtn.SetEnabled(enabled);
+    }
+
+    public void SetRecordProgressBar(float progress)
+    {
+        recordingProgressBar.value = progress;
     }
 }

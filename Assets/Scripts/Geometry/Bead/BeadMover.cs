@@ -13,11 +13,13 @@ public class BeadMover : MonoBehaviour
     [Header("Movement Settings")]
     [Tooltip("Beats per minute - controls how fast the bead moves")]
     [SerializeField] private float _bpm = 10f; // Default to 10 BPM
-    
-    public float bpm {
+
+    public float bpm
+    {
         get { return _bpm; }
-        set { 
-            _bpm = value; 
+        set
+        {
+            _bpm = value;
             // Recalculate speed if we have path points
             if (pathPoints.Count > 0)
                 speed = totalPathLength / (60f / _bpm);
@@ -42,7 +44,7 @@ public class BeadMover : MonoBehaviour
         Loop,       // Continuously loop from end to start
         PingPong    // Reverse direction at ends
     }
-    
+
     public MovementMode movementMode = MovementMode.Loop;
 
     private List<Vector3> pathPoints = new List<Vector3>();
@@ -62,7 +64,7 @@ public class BeadMover : MonoBehaviour
             enabled = false;
             return;
         }
-        
+
         // Initialize with a better default curve that makes easing more obvious
         if (easingCurve == null || easingCurve.length < 2)
         {
@@ -75,7 +77,7 @@ public class BeadMover : MonoBehaviour
                 new Keyframe(0.9f, 0.95f, 2f, 1f), // Late knee point
                 new Keyframe(1f, 1f, 0f, 0f)       // End point
             );
-            
+
 #if UNITY_EDITOR
             // Make the curve more extreme - only in editor
             for (int i = 0; i < easingCurve.keys.Length; i++)
@@ -87,7 +89,7 @@ public class BeadMover : MonoBehaviour
             }
 #endif
         }
-        
+
         BakePath(); // Initial bake + place bead at first point
     }
 
@@ -96,7 +98,7 @@ public class BeadMover : MonoBehaviour
         RebakePathPoints(); // Always refresh the world-space points
 
         if (pathPoints.Count < 2) return;
-        
+
         // For one-shot mode, stop moving when we reach the end
         if (movementMode == MovementMode.OneShot && hasCompletedPath)
             return;
@@ -104,7 +106,7 @@ public class BeadMover : MonoBehaviour
         // Get current and next point based on direction
         Vector3 a = pathPoints[currentSegment];
         Vector3 b;
-        
+
         if (isMovingForward)
         {
             b = currentSegment + 1 < pathPoints.Count ? pathPoints[currentSegment + 1] : pathPoints[0];
@@ -120,21 +122,21 @@ public class BeadMover : MonoBehaviour
 
         // Calculate current path progress for easing
         UpdatePathProgress();
-        
+
         // Apply easing to speed
         float easedSpeed = ApplyEasing(speed);
-        
+
         segmentProgress += (easedSpeed * Time.deltaTime) / d;
         transform.position = Vector3.Lerp(a, b, segmentProgress);
 
         if (segmentProgress >= 1f)
         {
             segmentProgress -= 1f;
-            
+
             if (isMovingForward)
             {
                 currentSegment++;
-                
+
                 // Check if we've reached the end of the path
                 if (currentSegment >= pathPoints.Count - 1)
                 {
@@ -147,14 +149,14 @@ public class BeadMover : MonoBehaviour
                             transform.position = pathPoints[currentSegment];
                             hasCompletedPath = true;
                             break;
-                            
+
                         case MovementMode.Loop:
                             // Loop back to start
                             currentSegment = 0;
                             // Reset path progress for easing
                             pathProgress = 0f;
                             break;
-                            
+
                         case MovementMode.PingPong:
                             // Reverse direction
                             currentSegment = pathPoints.Count - 2;  // Set to second-to-last point
@@ -167,7 +169,7 @@ public class BeadMover : MonoBehaviour
             {
                 // Moving backward (for ping-pong)
                 currentSegment--;
-                
+
                 // Check if we've reached the start of the path
                 if (currentSegment <= 0)
                 {
@@ -184,52 +186,52 @@ public class BeadMover : MonoBehaviour
     private float ApplyEasing(float baseSpeed)
     {
         if (easingAmount <= 0.01f) return baseSpeed; // No easing if very low
-        
+
         // Evaluate the easing curve based on current path progress
         float curveValue = easingCurve.Evaluate(pathProgress);
-        
+
         // Apply intensity to make variation more dramatic
         // Map curve value from 0-1 to a speed multiplier from slowdown to speedup
         float slowdownFactor = 1f / easingIntensity;  // e.g. 0.5 at intensity 2
         float speedupFactor = easingIntensity;        // e.g. 2.0 at intensity 2
-        
+
         // Create a speed multiplier that ranges from slowdown to speedup
         float speedMultiplier = Mathf.Lerp(slowdownFactor, speedupFactor, curveValue);
-        
+
         // Blend between base speed and modified speed based on easing amount
         return baseSpeed * Mathf.Lerp(1f, speedMultiplier, easingAmount);
     }
-    
+
     // Add these helper methods to allow inspection of the easing during play mode
-    
+
     // Returns the current speed multiplier for visualization
     public float GetCurrentSpeedMultiplier()
     {
         if (easingAmount <= 0.01f) return 1f;
-        
+
         float curveValue = easingCurve.Evaluate(pathProgress);
         float slowdownFactor = 1f / easingIntensity;
         float speedupFactor = easingIntensity;
         float multiplier = Mathf.Lerp(slowdownFactor, speedupFactor, curveValue);
-        
+
         return Mathf.Lerp(1f, multiplier, easingAmount);
     }
-    
+
     // Returns the current path progress (useful for debugging)
     public float GetPathProgress()
     {
         return pathProgress;
     }
-    
+
     // Allows resetting the easing curve from editor scripts or inspector buttons
     public void ResetEasingCurve()
     {
         // Create a more dramatic S-curve with steeper tangents
         easingCurve = new AnimationCurve(
-            new Keyframe(0f, 0f, 0f, 2f),       
-            new Keyframe(0.25f, 0.5f, 2f, 2f),  
-            new Keyframe(0.75f, 0.5f, 0f, 2f),  
-            new Keyframe(1f, 1f, 2f, 0f)        
+            new Keyframe(0f, 0f, 0f, 2f),
+            new Keyframe(0.25f, 0.5f, 2f, 2f),
+            new Keyframe(0.75f, 0.5f, 0f, 2f),
+            new Keyframe(1f, 1f, 2f, 0f)
         );
 
 #if UNITY_EDITOR
@@ -241,12 +243,12 @@ public class BeadMover : MonoBehaviour
         }
 #endif
     }
-    
+
     // Update the overall progress through the path for easing calculations
     private void UpdatePathProgress()
     {
         if (pathPoints.Count <= 1) return;
-        
+
         // Calculate path progress
         if (isMovingForward)
         {
@@ -272,15 +274,13 @@ public class BeadMover : MonoBehaviour
         isMovingForward = true;
         hasCompletedPath = false;
         pathProgress = 0f;
-        
+
         if (pathPoints.Count > 0)
             transform.position = pathPoints[0];
 
         // Calculate total path length and update speed
         totalPathLength = CalculateTotalPathLength();
         speed = totalPathLength / (60f / bpm);
-
-        Debug.Log($"[BeadMover] Path baked. Point count = {pathPoints.Count}, Total Length = {totalPathLength:F2}, Speed = {speed:F2}");
     }
 
     void RebakePathPoints()
@@ -314,7 +314,7 @@ public class BeadMover : MonoBehaviour
         }
         return length;
     }
-    
+
     // Public method to reset the bead to the start of the path
     public void ResetToStart()
     {
@@ -323,7 +323,7 @@ public class BeadMover : MonoBehaviour
         isMovingForward = true;
         hasCompletedPath = false;
         pathProgress = 0f;
-        
+
         if (pathPoints.Count > 0)
             transform.position = pathPoints[0];
     }

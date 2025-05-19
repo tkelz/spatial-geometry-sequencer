@@ -13,10 +13,10 @@ public class StemUIManager : MonoBehaviour
     public OptionUIManager optionUIManager;
 
     [Header("Game Manager")]
-    public GameManager gameManager;
     public StemManager stemManager;
 
     Button addStemBtn, removeStemBtn;
+    Button saveSessionBtn, loadSessionBtn, newSessionBtn;
     ListView stemContainer;
 
     void Awake()
@@ -26,9 +26,9 @@ public class StemUIManager : MonoBehaviour
 
     void OnEnable()
     {
-        if (uiDocument == null || gameManager == null)
+        if (uiDocument == null || stemManager == null)
         {
-            Debug.LogError("StemUIManager: Assign both a UIDocument and GameManager!");
+            Debug.LogError("StemUIManager: Assign both a UIDocument and StemManager!");
             enabled = false;
             return;
         }
@@ -36,11 +36,17 @@ public class StemUIManager : MonoBehaviour
         var root = uiDocument.rootVisualElement;
         addStemBtn = root.Q<Button>("AddStemBtn");
         removeStemBtn = root.Q<Button>("RemoveStemBtn");
+        saveSessionBtn = root.Q<Button>("SaveSessionBtn");
+        loadSessionBtn = root.Q<Button>("LoadSessionBtn");
+        newSessionBtn = root.Q<Button>("NewSessionBtn");
 
         stemContainer = root.Q<ListView>("StemContainer");
 
         addStemBtn.RegisterCallback<ClickEvent>(evt => AddStem());
         removeStemBtn.RegisterCallback<ClickEvent>(evt => RemoveStem());
+        saveSessionBtn.RegisterCallback<ClickEvent>(evt => SaveSession());
+        loadSessionBtn.RegisterCallback<ClickEvent>(evt => LoadSession());
+        newSessionBtn.RegisterCallback<ClickEvent>(evt => NewSession());
 
         stemContainer.makeItem = () =>
         {
@@ -50,36 +56,57 @@ public class StemUIManager : MonoBehaviour
             newStemUI.userData = newStem;
             return newStemUI;
         };
-        stemContainer.bindItem = (item, index) => {
+        stemContainer.bindItem = (item, index) =>
+        {
             stemManager.stems[index].SetVisualElements(item);
             item.userData = stemManager.stems[index];
         };
         stemContainer.selectionChanged += OnStemChange;
     }
 
-    public void RefreshItems () {
+    public void RefreshItems()
+    {
         stemContainer.itemsSource = stemManager.stems;
-        print(stemManager.stems);
         stemContainer.RefreshItems();
     }
 
-    void AddStem() {
+    void AddStem()
+    {
         stemManager.AddNewStem();
         RefreshItems();
     }
 
-    void RemoveStem() {
-        print("UI:" + stemContainer.selectedIndex);
+    void RemoveStem()
+    {
         stemManager.RemoveStem(stemContainer.selectedIndex);
         RefreshItems();
         stemContainer.ClearSelection();
     }
 
-    void OnStemChange (IEnumerable<object> selectedItems) {
+    void OnStemChange(IEnumerable<object> selectedItems)
+    {
         var stemItem = stemContainer.selectedItem as StemItem;
 
         // Update stem data on UI
         removeStemBtn.SetEnabled(!!stemItem);
         optionUIManager.SetStemData(stemItem);
+    }
+
+    public void SaveSession()
+    {
+        SessionManager.Instance.SaveSession();
+    }
+
+    public void LoadSession()
+    {
+        SessionManager.Instance.LoadSession();
+        RefreshItems();
+    }
+
+    public void NewSession()
+    {
+        SessionManager.Instance.NewSession();
+        stemContainer.ClearSelection();
+        RefreshItems();
     }
 }
