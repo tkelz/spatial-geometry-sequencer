@@ -67,7 +67,8 @@ public class StemItem : MonoBehaviour
         foreach (var material in fairyMesh.materials)
         {
             material.color = stemColor;
-            material.SetColor("_EmissionColor", stemColor);
+            float intensity = Mathf.Pow(2, 5);
+            material.SetColor("_EmissionColor", stemColor * intensity);
         }
     }
 
