@@ -69,6 +69,7 @@ public class StemManager : MonoBehaviour
 
     public void Play()
     {
+        isPlaying = true;
         foreach (var stem in stems)
         {
             stem.StartStem();
@@ -77,6 +78,7 @@ public class StemManager : MonoBehaviour
 
     public void Pause()
     {
+        isPlaying = false;
         foreach (var stem in stems)
         {
             stem.PauseStem();
@@ -85,6 +87,7 @@ public class StemManager : MonoBehaviour
 
     public void RestartAllStems()
     {
+        isPlaying = true;
         foreach (var stem in stems)
         {
             stem.Restart();

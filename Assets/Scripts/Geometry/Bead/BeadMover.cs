@@ -26,6 +26,9 @@ public class BeadMover : MonoBehaviour
         }
     }
 
+    [Range(0, 100)]
+    public int offset = 0;
+
     [Header("Easing Settings")]
     [Range(0f, 1f)]
     [Tooltip("0 = No easing, 0.5 = Moderate easing, 1 = Maximum easing")]
@@ -46,7 +49,7 @@ public class BeadMover : MonoBehaviour
     }
 
     public MovementMode movementMode = MovementMode.Loop;
-    public bool IsMoving { get; set; } = false;
+    public bool isMoving { get; set; } = false;
 
     private List<Vector3> pathPoints = new List<Vector3>();
     private int currentSegment = 0;
@@ -96,7 +99,7 @@ public class BeadMover : MonoBehaviour
 
     void Update()
     {
-        if (!IsMoving) return;
+        if (!isMoving) return;
 
         RebakePathPoints(); // Always refresh the world-space points
 
@@ -322,13 +325,14 @@ public class BeadMover : MonoBehaviour
     public void ResetToStart()
     {
         BakePath();
-        currentSegment = 0;
+        currentSegment = (pathPoints.Count - 1) * offset / 100;
         segmentProgress = 0f;
+        isMoving = false;
         isMovingForward = true;
         hasCompletedPath = false;
         pathProgress = 0f;
 
         if (pathPoints.Count > 0)
-            transform.position = pathPoints[0];
+            transform.position = pathPoints[currentSegment];
     }
 }

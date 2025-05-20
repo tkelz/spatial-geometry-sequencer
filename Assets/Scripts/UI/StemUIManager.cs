@@ -55,12 +55,14 @@ public class StemUIManager : MonoBehaviour
             stemManager.Play();
             playBtn.style.display = DisplayStyle.None;
             stopBtn.style.display = DisplayStyle.Flex;
+            optionUIManager.EnableStemOptions(false);
         });
         stopBtn.RegisterCallback<ClickEvent>(evt =>
         {
             stemManager.Pause();
             playBtn.style.display = DisplayStyle.Flex;
             stopBtn.style.display = DisplayStyle.None;
+            optionUIManager.EnableStemOptions(stemContainer.selectedIndex != -1);
         });
         stopBtn.style.display = DisplayStyle.None;
 
@@ -117,6 +119,7 @@ public class StemUIManager : MonoBehaviour
     {
         SessionManager.Instance.LoadSession();
         RefreshItems();
+        optionUIManager.EnableStemOptions(false);
     }
 
     public void NewSession()
@@ -124,5 +127,6 @@ public class StemUIManager : MonoBehaviour
         SessionManager.Instance.NewSession();
         stemContainer.ClearSelection();
         RefreshItems();
+        optionUIManager.EnableStemOptions(false);
     }
 }

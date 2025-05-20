@@ -14,6 +14,7 @@
                 <ui:Toggle label="Spatialize" name="Spatialize" value="true" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
                 <ui:SliderInt label="BPM" value="42" high-value="200" name="BeadSpeed" low-value="1" style="color: rgb(255, 255, 255);" />
+                <ui:SliderInt label="Offset" value="0" high-value="100" name="BeadOffset" low-value="0" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
                 <ui:DropdownField label="Shape Type" name="ShapeType" choices="Torus,Spiral,Ring,Line" style="color: rgb(255, 255, 255);" />
                 <ui:Instance template="TorusOptionUI" name="TorusOption" style="display: none;" />

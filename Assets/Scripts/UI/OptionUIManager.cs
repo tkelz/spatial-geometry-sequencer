@@ -12,7 +12,7 @@ public class OptionUIManager : MonoBehaviour
     Button musicOpenBtn;
 
     GroupBox stemOptions;
-    SliderInt beadSpeed;
+    SliderInt beadSpeed, beadOffset;
     DropdownField shapeDropdown;
     Slider posX, posY, posZ;
     Slider rotX, rotY, rotZ;
@@ -62,6 +62,7 @@ public class OptionUIManager : MonoBehaviour
         musicOpenBtn = root.Q<Button>("MusicOpenBtn");
         spatializeToggle = root.Q<Toggle>("Spatialize");
         beadSpeed = root.Q<SliderInt>("BeadSpeed");
+        beadOffset = root.Q<SliderInt>("BeadOffset");
         shapeDropdown = root.Q<DropdownField>("ShapeType");
         reverbToggle = root.Q<Toggle>("ReverbToggle");
         reverbDropdown = root.Q<DropdownField>("ReverbPreset");
@@ -114,6 +115,12 @@ public class OptionUIManager : MonoBehaviour
             // Change the speed of the bead
             stemItem.ChangeBeadSpeed(evt.newValue);
             beadSpeed.label = $"BPM: {evt.newValue:F2}";
+        });
+        beadOffset.RegisterValueChangedCallback(evt =>
+        {
+            // Change the offset of the bead
+            stemItem.ChangeBeadOffset(evt.newValue);
+            beadOffset.label = $"Offset: {evt.newValue}";
         });
         shapeDropdown.RegisterValueChangedCallback(evt =>
         {
@@ -302,15 +309,20 @@ public class OptionUIManager : MonoBehaviour
         recordingProgressBar.value = 0;
     }
 
+    public void EnableStemOptions(bool enabled)
+    {
+        stemOptions.SetEnabled(enabled);
+    }
+
     public void SetStemData(StemItem stemItem)
     {
         if (!stemItem)
         {
-            stemOptions.SetEnabled(false);
+            EnableStemOptions(false);
             return;
         }
 
-        stemOptions.SetEnabled(true);
+        EnableStemOptions(!StemManager.Instance.isPlaying);
 
         this.stemItem = stemItem;
         var p = stemItem.shapeParent.position;

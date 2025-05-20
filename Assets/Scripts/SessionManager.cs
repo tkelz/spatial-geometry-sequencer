@@ -43,6 +43,7 @@ public class SessionManager : MonoBehaviour
                 rotation = stem.shapeParent.rotation.eulerAngles,
                 scale = stem.shapeParent.localScale.x,
                 bpm = stem.bead.bpm,
+                offset = stem.bead.offset,
                 spatialize = stem.beadAudioSource.spatialize,
 
                 torusP = torus.p,
@@ -112,16 +113,6 @@ public class SessionManager : MonoBehaviour
         {
             var stemData = sessionData.stems[i];
             var stemItem = StemManager.Instance.AddNewStem();
-            stemItem.SetStemColor(stemData.color);
-            stemItem.ChangeShape(stemData.activeShapeName);
-            stemItem.ChangeShapePosition(stemData.position);
-            stemItem.ChangeShapeRotation(stemData.rotation);
-            stemItem.ChangeShapeScale(stemData.scale);
-            stemItem.ChangeBeadSpeed(stemData.bpm);
-            stemItem.EnableSpatialize(stemData.spatialize);
-            stemItem.ChangeAudioName(stemData.audioName);
-            stemItem.SetAudioUrl(stemData.audioUrl);
-
             var torus = stemItem.GetComponentInChildren<TorusKnotGenerator>(true);
             var spiral = stemItem.GetComponentInChildren<SpiralGenerator>(true);
             var line = stemItem.GetComponentInChildren<WaveLineGenerator>(true);
@@ -146,6 +137,17 @@ public class SessionManager : MonoBehaviour
 
             circle.radius = stemData.circleRadius;
             circle.pointCount = stemData.circlePointCount;
+
+            stemItem.SetStemColor(stemData.color);
+            stemItem.ChangeShape(stemData.activeShapeName);
+            stemItem.ChangeShapePosition(stemData.position);
+            stemItem.ChangeShapeRotation(stemData.rotation);
+            stemItem.ChangeShapeScale(stemData.scale);
+            stemItem.ChangeBeadSpeed(stemData.bpm);
+            stemItem.ChangeBeadOffset(stemData.offset);
+            stemItem.EnableSpatialize(stemData.spatialize);
+            stemItem.ChangeAudioName(stemData.audioName);
+            stemItem.SetAudioUrl(stemData.audioUrl);
         }
 
         // Load reverb zone data
@@ -197,6 +199,7 @@ public class StemData
     public Vector3 rotation;
     public float scale;
     public float bpm;
+    public int offset;
 
     public int torusP;
     public int torusQ;

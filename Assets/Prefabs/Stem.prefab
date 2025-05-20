@@ -70287,6 +70287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathLine: {fileID: 1357781261089119616}
   _bpm: 10
+  offset: 0
   easingAmount: 0
   easingIntensity: 2
   easingCurve:
@@ -87192,6 +87193,7 @@ MonoBehaviour:
   shapeParent: {fileID: 1135927640409811712}
   beadAudioSource: {fileID: 5560590212903078026}
   fileManager: {fileID: 8117624415203149094}
+  fairyMesh: {fileID: 1532823976293341926}
   stemColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8117624415203149094
 MonoBehaviour:

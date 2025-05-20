@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using SFB;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class StemItem : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class StemItem : MonoBehaviour
     public Transform shapeParent;
     public AudioSource beadAudioSource;
     public FileManager fileManager;
+    public SpotLight spotLight;
+    public SkinnedMeshRenderer fairyMesh;
 
     public Color stemColor;
 
@@ -42,27 +45,30 @@ public class StemItem : MonoBehaviour
     {
         beadAudioSource.Play();
         bead.ResetToStart();
-        bead.IsMoving = true;
+        bead.isMoving = true;
     }
 
     public void PauseStem()
     {
         beadAudioSource.Stop();
         bead.ResetToStart();
-        bead.IsMoving = false;
     }
 
     public void Restart()
     {
         beadAudioSource.PlayOneShot(audioClip);
         bead.ResetToStart();
-        bead.IsMoving = true;
     }
 
     public void SetStemColor(Color newColor)
     {
         stemColor = newColor;
         bead.pathLine.material.color = stemColor;
+        foreach (var material in fairyMesh.materials)
+        {
+            material.color = stemColor;
+            material.SetColor("_EmissionColor", stemColor);
+        }
     }
 
     public void SetVisualElements(VisualElement root)
@@ -116,6 +122,12 @@ public class StemItem : MonoBehaviour
     public void ChangeBeadSpeed(float speed)
     {
         bead.bpm = speed;
+    }
+
+    public void ChangeBeadOffset(int offset)
+    {
+        bead.offset = offset;
+        bead.ResetToStart();
     }
 
     public void EnableSpatialize(bool enable)
