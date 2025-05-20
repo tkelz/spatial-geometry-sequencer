@@ -3,84 +3,65 @@ using UnityEngine;
 
 public class StemManager : MonoBehaviour
 {
+    public static StemManager Instance;
+
     [Header("Prefabs")]
-    public GameObject beadPrefab;
-    public List<GameObject> pathPrefabs; // List of available path shapes
+    public GameObject stemPrefab;
 
-    [Header("Settings")]
-    public float bpm = 120f;
+    public List<StemItem> stems;
 
-    private List<Stem> activeStems = new List<Stem>();
+    [Header("Room Settings")]
+    public AudioReverbZone audioReverbZone;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
-        // For now, create a first test stem
-        AddNewStem();
+        stems = new List<StemItem>();
     }
 
-    public void AddNewStem()
+    public void DestroyAllStems()
     {
-        if (pathPrefabs.Count == 0)
+        foreach (var stem in stems)
         {
-            Debug.LogWarning("No path prefabs assigned!");
-            return;
+            Destroy(stem.gameObject);
         }
+        stems.Clear();
+    }
 
-        // Instantiate a random path
-        GameObject pathInstance = Instantiate(pathPrefabs[Random.Range(0, pathPrefabs.Count)], Vector3.zero, Quaternion.identity);
-
-        // Instantiate a bead
-        GameObject beadInstance = Instantiate(beadPrefab, pathInstance.transform);
+    public StemItem AddNewStem()
+    {
+        // Instantiate a stem
+        GameObject newStemInstance = Instantiate(stemPrefab, Vector3.zero, Quaternion.identity);
+        StemItem stemItem = newStemInstance.GetComponent<StemItem>();
+        newStemInstance.name = "Stem_" + (stems.Count + 1);
 
         // Random color
-        Color beadColor = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
-        beadInstance.GetComponentInChildren<Renderer>().material.color = beadColor;
+        Color stemColor = Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+        stemItem.SetStemColor(stemColor);
 
-        // Add AudioSource if missing
-        AudioSource audio = beadInstance.GetComponent<AudioSource>();
-        if (audio == null)
-            audio = beadInstance.AddComponent<AudioSource>();
+        stems.Add(stemItem);
 
-        // TEMP: Pick a random audio clip from Resources
-        AudioClip clip = Resources.Load<AudioClip>("example_audio"); // Later, replace with user-chosen file
-        if (clip != null)
-        {
-            audio.clip = clip;
-            audio.spatialBlend = 1f; // 3D Sound
-            audio.loop = true;
-            audio.Play();
-        }
-
-        // Create a stem object to manage it
-        Stem newStem = new Stem
-        {
-            bead = beadInstance,
-            path = pathInstance,
-            audioSource = audio
-        };
-
-        activeStems.Add(newStem);
+        return stemItem;
     }
 
-    void Update()
+    public void RemoveStem(int index)
     {
-        foreach (Stem stem in activeStems)
-        {
-            if (stem.path == null || stem.bead == null) continue;
-
-            float speed = bpm / 60f; // Units per second (simple for now)
-
-            // Move along the path (basic rotation around center as placeholder)
-            stem.bead.transform.RotateAround(Vector3.zero, Vector3.up, speed * Time.deltaTime * 20f);
-        }
+        Destroy(stems[index].gameObject);
+        stems.RemoveAt(index);
     }
 
-    [System.Serializable]
-    public class Stem
+    public void EnableAudioReverb(bool enable)
     {
-        public GameObject bead;
-        public GameObject path;
-        public AudioSource audioSource;
+        audioReverbZone.enabled = enable;
+    }
+
+    public void ChangeReverbPreset(AudioReverbPreset preset)
+    {
+        audioReverbZone.reverbPreset = preset;
     }
 }
 

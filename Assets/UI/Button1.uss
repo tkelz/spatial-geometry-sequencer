@@ -1,3 +1,165 @@
 :root {
+    --main-color: rgba(0, 162, 255, 0.8);
+    --second-color: rgba(0, 162, 255, 0.2);
+    --highlight-color: rgba(0, 174, 255, 0.9);
+    --disabled-opacity: 0.3;
+}
 
+.unity-base-field__label {
+    min-width: 100px;
+}
+
+.unity-base-field:focus:enabled > .unity-base-field__label {
+    color: var(--main-color);
+}
+
+/* Button CSS */
+Button.btn-primary {
+    color: white;
+    background-color: var(--second-color);
+    border-radius: 6px;
+    border-color: var(--second-color);
+}
+Button.btn-primary:hover:enabled,
+Button.btn-primary:active:enabled {
+    background-color: var(--second-color);
+    border-color: var(--highlight-color);
+}
+Button.btn-primary:disabled {
+    background-color: var(--second-color);
+    border-color: var(--highlight-color);
+    opacity: var(--disabled-opacity);
+}
+
+/* Toggle CSS */
+.unity-toggle__checkmark {
+    border-radius: 100%;
+    background-color: var(--second-color);
+    border-color: var(--second-color);
+    -unity-background-image-tint-color: var(--main-color);
+}
+
+.unity-toggle .unity-toggle__input:checked .unity-toggle__checkmark {
+    border-color: var(--second-color);
+}
+
+.unity-toggle .unity-toggle__input:hover:enabled .unity-toggle__checkmark,
+.unity-toggle .unity-toggle__input:active:enabled .unity-toggle__checkmark,
+.unity-toggle .unity-toggle__input:hover:enabled:checked .unity-toggle__checkmark,
+.unity-toggle .unity-toggle__input:active:enabled:checked .unity-toggle__checkmark {
+    border-color: var(--highlight-color);
+}
+
+.unity-toggle .unity-toggle__input:disabled .unity-toggle__checkmark,
+.unity-toggle .unity-toggle__input:checked:disabled .unity-toggle__checkmark {
+    background-color: var(--second-color);
+    border-color: var(--highlight-color);
+    opacity: var(--disabled-opacity);
+}
+
+/* Input Field */
+.unity-integer-field .unity-base-text-field__input {
+    background-color: var(--second-color);
+    border-radius: 6px;
+    border-color: var(--second-color);
+}
+
+/* Progress Bar */
+.unity-progress-bar .unity-progress-bar__background {
+    background-color: var(--second-color);
+    border-radius: 6px;
+    border-color: var(--second-color);
+}
+.unity-progress-bar .unity-progress-bar__progress {
+    background-color: var(--main-color);
+    border-radius: 4px;
+    border-color: var(--main-color);
+}
+
+/* DropdownField CSS */
+DropdownField .unity-base-field__input {
+    border-radius: 6px;
+    background-color: var(--second-color);
+    border-color: var(--second-color);
+}
+
+.unity-base-popup-field:hover:enabled .unity-base-field__input,
+.unity-base-popup-field:active:enabled .unity-base-field__input,
+ {
+    background-color: var(--second-color);
+    border-color: var(--highlight-color);
+}
+
+.unity-base-popup-field:disabled .unity-base-field__input {
+    background-color: var(--second-color);
+    border-color: var(--highlight-color);
+    opacity: var(--disabled-opacity);
+}
+
+.unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: var(--main-color);
+}
+
+.unity-base-dropdown__container-outer {
+    border-radius: 6px;
+    border-color: var(--main-color);
+    color: white;
+}
+
+.unity-base-dropdown__container-inner {
+    background-color: var(--main-color);
+}
+
+/* Slider CSS */
+Slider:hover:enabled .unity-base-slider__dragger,
+Slider:active:enabled .unity-base-slider__dragger {
+    border-color: var(--highlight-color);
+    background-color:var(--main-color);
+}
+.unity-base-slider--horizontal .unity-base-slider__tracker {
+    border-radius: 3px;
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+}
+
+.unity-base-slider--horizontal .unity-base-slider__dragger {
+    top: 18px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--main-color);
+    border-color: var(--second-color);
+    border-radius: 100%;
+}
+
+/* Scroll bar */
+.unity-scroller--vertical > .unity-scroller__low-button {
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+    -unity-background-image-tint-color: var(--main-color);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.unity-scroller--vertical > .unity-scroller__high-button {
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+    -unity-background-image-tint-color: var(--main-color);
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.unity-scroller--vertical .unity-base-slider__dragger {
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+}
+
+.unity-scroller--vertical:hover:enabled .unity-base-slider__dragger {
+    background-color:var(--main-color);
+}
+
+.unity-scroller--vertical .unity-base-slider__tracker,
+.unity-scroller--vertical:hover:enabled .unity-base-slider__tracker {
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+    opacity: 0.2;
 }

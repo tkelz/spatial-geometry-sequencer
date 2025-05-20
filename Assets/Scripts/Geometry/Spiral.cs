@@ -68,7 +68,7 @@ public class SpiralGenerator : MonoBehaviour
     /// </summary>
     public Vector3[] GetPoints() => _points;
 
-    private void Regenerate()
+    public void Regenerate()
     {
         // Cache current parameters
         _lastTurns = turns;
