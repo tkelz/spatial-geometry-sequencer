@@ -17,6 +17,8 @@ public class StemItem : MonoBehaviour
     public string audioName { private set; get; }
     public string audioUrl { private set; get; }
 
+    AudioClip audioClip;
+
     void Awake()
     {
         // Initialize the first shape
@@ -33,11 +35,15 @@ public class StemItem : MonoBehaviour
 
     void Start()
     {
-        print("Audio Info:");
-        print(beadAudioSource.clip.samples);
-        print(beadAudioSource.clip.channels);
-        print(beadAudioSource.clip.frequency);
-        print(beadAudioSource.clip.length);
+        LoadAudio(audioUrl);
+    }
+
+    public void Restart()
+    {
+        // beadAudioSource.Stop();
+        // beadAudioSource.Play();
+        beadAudioSource.PlayOneShot(audioClip);
+        bead.ResetToStart();
     }
 
     public void SetStemColor(Color newColor)
@@ -117,12 +123,12 @@ public class StemItem : MonoBehaviour
         }
     }
 
-    public void LoadAudioSession(string url)
+    public void LoadAudio(string url)
     {
         if (audioName == "Example Audio")
         {
             print(audioUrl);
-            var audioClip = Resources.Load<AudioClip>(audioUrl);
+            audioClip = Resources.Load<AudioClip>(audioUrl);
             beadAudioSource.clip = audioClip;
             beadAudioSource.Play();
         }
@@ -136,10 +142,16 @@ public class StemItem : MonoBehaviour
     {
         var loader = new WWW(url);
         yield return loader;
-        beadAudioSource.clip = loader.GetAudioClip(false, false);
+        audioClip = loader.GetAudioClip(false, false);
+        beadAudioSource.clip = audioClip;
         beadAudioSource.Play();
         audioUrl = url;
         ChangeAudioName(Path.GetFileNameWithoutExtension(url));
+    }
+
+    public void SetAudioUrl(string url)
+    {
+        audioUrl = url;
     }
 
     public void ChangeAudioName(string name)

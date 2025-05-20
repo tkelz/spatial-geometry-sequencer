@@ -30,6 +30,10 @@ Button.btn-primary:disabled {
     border-color: var(--highlight-color);
     opacity: var(--disabled-opacity);
 }
+.play-btn .unity-button__image {
+    height: 8px;
+    width: 8px;
+}
 
 /* Toggle CSS */
 .unity-toggle__checkmark {

@@ -54,22 +54,14 @@ public class ExportManager : MonoBehaviour
         }
     }
 
-    public void StartRecording(float duration)
+    public void StartRecording()
     {
         recordedTime = 0;
-        audioSeconds = duration;
+        audioSeconds = StemManager.Instance.GetMaxDuration();
         isRecording = true;
         samples.Clear();
         OptionUIManager.Instance.EnableExportOptions(false);
-    }
-
-    public void ExportAudio()
-    {
-        var path = StandaloneFileBrowser.SaveFilePanel("Export Audio", "", "output", "wav");
-        if (!string.IsNullOrEmpty(path))
-        {
-            SaveWav(path);
-        }
+        StemManager.Instance.RestartAllStems();
     }
 
     public void GetAudioClip()
@@ -82,7 +74,17 @@ public class ExportManager : MonoBehaviour
         recordedClip = AudioClip.Create("CapturedClip", sampleCount, channels, sampleRate, false);
         recordedClip.SetData(data, 0);
 
+        ExportAudio();
         OptionUIManager.Instance.EnableExportOptions(true);
+    }
+
+    public void ExportAudio()
+    {
+        var path = StandaloneFileBrowser.SaveFilePanel("Export Audio", "", "output", "wav");
+        if (!string.IsNullOrEmpty(path))
+        {
+            SaveWav(path);
+        }
     }
 
     public void SaveWav(string filename)

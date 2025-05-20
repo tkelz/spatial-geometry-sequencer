@@ -44,12 +44,10 @@
                 <ui:Slider label="Reflection Delay" value="0.02" high-value="0.3" name="ReflectionDelay" low-value="0" enabled="false" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
                 <ui:Label text="Export Options" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
-                <ui:IntegerField label="Seconds" value="10" name="RecordSeconds" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: space-between; align-content: auto; align-items: stretch;">
-                    <ui:Button text="Record" name="RecordBtn" class="btn-primary" style="flex-grow: 1;" />
                     <ui:Button text="Export" name="ExportBtn" class="btn-primary" style="flex-grow: 1;" />
                 </ui:VisualElement>
-                <ui:ProgressBar value="50" title="Recording Progress" name="RecordingProgress" style="color: rgb(255, 255, 255);" />
+                <ui:ProgressBar value="50" title="Export Progress" name="RecordingProgress" style="color: rgb(255, 255, 255);" />
             </ui:GroupBox>
         </ui:VisualElement>
     </ui:VisualElement>

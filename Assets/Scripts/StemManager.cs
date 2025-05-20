@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Rendering;
 
 public class StemManager : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class StemManager : MonoBehaviour
 
     [Header("Room Settings")]
     public AudioReverbZone audioReverbZone;
+    public AudioReverbFilter audioReverbFilter;
 
     void Awake()
     {
@@ -21,6 +24,16 @@ public class StemManager : MonoBehaviour
     void Start()
     {
         stems = new List<StemItem>();
+    }
+
+    public float GetMaxDuration()
+    {
+        float duration = 0f;
+        foreach (var stem in stems)
+        {
+            duration = Mathf.Max(duration, stem.beadAudioSource.clip.length);
+        }
+        return duration;
     }
 
     public void DestroyAllStems()
@@ -54,14 +67,37 @@ public class StemManager : MonoBehaviour
         stems.RemoveAt(index);
     }
 
+    public void RestartAllStems()
+    {
+        foreach (var stem in stems)
+        {
+            stem.Restart();
+        }
+    }
+
     public void EnableAudioReverb(bool enable)
     {
         audioReverbZone.enabled = enable;
+        audioReverbFilter.enabled = enable;
     }
 
     public void ChangeReverbPreset(AudioReverbPreset preset)
     {
         audioReverbZone.reverbPreset = preset;
+        audioReverbFilter.reverbPreset = preset;
+        // masterMixerGroup.audioMixer.SetFloat("Room", audioReverbZone.room);
+        // masterMixerGroup.audioMixer.SetFloat("RoomHF", audioReverbZone.roomHF);
+        // masterMixerGroup.audioMixer.SetFloat("RoomLF", audioReverbZone.roomLF);
+        // masterMixerGroup.audioMixer.SetFloat("DecayTime", audioReverbZone.decayTime);
+        // masterMixerGroup.audioMixer.SetFloat("DecayHFRatio", audioReverbZone.decayHFRatio);
+        // masterMixerGroup.audioMixer.SetFloat("Reflections", audioReverbZone.reflections);
+        // masterMixerGroup.audioMixer.SetFloat("ReflectionsDelay", audioReverbZone.reflectionsDelay);
+        // masterMixerGroup.audioMixer.SetFloat("ReverbLevel", audioReverbZone.reverb);
+        // masterMixerGroup.audioMixer.SetFloat("ReverbDelay", audioReverbZone.reverbDelay);
+        // masterMixerGroup.audioMixer.SetFloat("Diffusion", audioReverbZone.diffusion);
+        // masterMixerGroup.audioMixer.SetFloat("Density", audioReverbZone.density);
+        // masterMixerGroup.audioMixer.SetFloat("HFReference", audioReverbZone.HFReference);
+        // masterMixerGroup.audioMixer.SetFloat("LFReference", audioReverbZone.LFReference);
     }
 }
 

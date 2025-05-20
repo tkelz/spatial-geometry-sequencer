@@ -23,8 +23,7 @@ public class OptionUIManager : MonoBehaviour
     DropdownField reverbDropdown;
     Slider reverbRoomSize, reverbLevel, reverbDelay, reverbReflection, reverbReflectionDelay;
 
-    Button recordBtn, exportBtn;
-    IntegerField recordSeconds;
+    Button exportBtn;
     ProgressBar recordingProgressBar;
 
     StemItem stemItem;
@@ -105,9 +104,7 @@ public class OptionUIManager : MonoBehaviour
         linePointsPerWave = root.Q<SliderInt>("LinePointsPerWave");
 
         // Export Options
-        recordBtn = root.Q<Button>("RecordBtn");
         exportBtn = root.Q<Button>("ExportBtn");
-        recordSeconds = root.Q<IntegerField>("RecordSeconds");
         recordingProgressBar = root.Q<ProgressBar>("RecordingProgress");
 
         // Hook up callbacks
@@ -287,7 +284,7 @@ public class OptionUIManager : MonoBehaviour
         {
             reverbDropdown.choices.Add(preset.ToString());
         }
-        reverbDropdown.value = AudioReverbPreset.Cave.ToString();
+        reverbDropdown.value = AudioReverbPreset.Bathroom.ToString();
         reverbDropdown.RegisterValueChangedCallback(evt =>
         {
             AudioReverbPreset preset = (AudioReverbPreset)System.Enum.Parse(typeof(AudioReverbPreset), evt.newValue);
@@ -301,9 +298,7 @@ public class OptionUIManager : MonoBehaviour
         });
 
         // Export
-        recordBtn.RegisterCallback<ClickEvent>(evt => ExportManager.Instance.StartRecording(recordSeconds.value));
-        exportBtn.RegisterCallback<ClickEvent>(evt => ExportManager.Instance.ExportAudio());
-        exportBtn.SetEnabled(false);
+        exportBtn.RegisterCallback<ClickEvent>(evt => ExportManager.Instance.StartRecording());
         recordingProgressBar.value = 0;
     }
 
@@ -436,17 +431,11 @@ public class OptionUIManager : MonoBehaviour
     public void EnableExportOptions(bool enabled)
     {
         exportBtn.SetEnabled(enabled);
-        recordBtn.SetEnabled(enabled);
-        recordSeconds.SetEnabled(enabled);
-    }
-
-    public void EnableExportBtn(bool enabled)
-    {
-        exportBtn.SetEnabled(enabled);
     }
 
     public void SetRecordProgressBar(float progress)
     {
         recordingProgressBar.value = progress;
+        recordingProgressBar.title = $"Export Progress ({progress:F2})";
     }
 }

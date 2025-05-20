@@ -120,7 +120,7 @@ public class SessionManager : MonoBehaviour
             stemItem.ChangeBeadSpeed(stemData.bpm);
             stemItem.EnableSpatialize(stemData.spatialize);
             stemItem.ChangeAudioName(stemData.audioName);
-            stemItem.LoadAudioSession(stemData.audioUrl);
+            stemItem.SetAudioUrl(stemData.audioUrl);
 
             var torus = stemItem.GetComponentInChildren<TorusKnotGenerator>(true);
             var spiral = stemItem.GetComponentInChildren<SpiralGenerator>(true);
