@@ -34,6 +34,12 @@ Button.btn-primary:disabled {
     height: 8px;
     width: 8px;
 }
+.play-btn-play .unity-button__image {
+    background-image: url("Assets/Textures/play-solid.svg");
+}
+.play-btn-stop .unity-button__image {
+    background-image: url("Assets/Textures/stop-solid.svg");
+}
 
 /* Toggle CSS */
 .unity-toggle__checkmark {

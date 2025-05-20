@@ -38,12 +38,25 @@ public class StemItem : MonoBehaviour
         LoadAudio(audioUrl);
     }
 
+    public void StartStem()
+    {
+        beadAudioSource.Play();
+        bead.ResetToStart();
+        bead.IsMoving = true;
+    }
+
+    public void PauseStem()
+    {
+        beadAudioSource.Stop();
+        bead.ResetToStart();
+        bead.IsMoving = false;
+    }
+
     public void Restart()
     {
-        // beadAudioSource.Stop();
-        // beadAudioSource.Play();
         beadAudioSource.PlayOneShot(audioClip);
         bead.ResetToStart();
+        bead.IsMoving = true;
     }
 
     public void SetStemColor(Color newColor)
@@ -76,6 +89,7 @@ public class StemItem : MonoBehaviour
                 shape.SetActive(true);
                 bead.pathLine = shape.GetComponentInChildren<LineRenderer>();
                 bead.pathLine.material.color = stemColor;
+                bead.ResetToStart();
             }
             else
             {
@@ -130,7 +144,6 @@ public class StemItem : MonoBehaviour
             print(audioUrl);
             audioClip = Resources.Load<AudioClip>(audioUrl);
             beadAudioSource.clip = audioClip;
-            beadAudioSource.Play();
         }
         else
         {
@@ -144,7 +157,6 @@ public class StemItem : MonoBehaviour
         yield return loader;
         audioClip = loader.GetAudioClip(false, false);
         beadAudioSource.clip = audioClip;
-        beadAudioSource.Play();
         audioUrl = url;
         ChangeAudioName(Path.GetFileNameWithoutExtension(url));
     }

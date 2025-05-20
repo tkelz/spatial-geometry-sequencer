@@ -46,6 +46,7 @@ public class BeadMover : MonoBehaviour
     }
 
     public MovementMode movementMode = MovementMode.Loop;
+    public bool IsMoving { get; set; } = false;
 
     private List<Vector3> pathPoints = new List<Vector3>();
     private int currentSegment = 0;
@@ -95,6 +96,8 @@ public class BeadMover : MonoBehaviour
 
     void Update()
     {
+        if (!IsMoving) return;
+
         RebakePathPoints(); // Always refresh the world-space points
 
         if (pathPoints.Count < 2) return;
@@ -318,6 +321,7 @@ public class BeadMover : MonoBehaviour
     // Public method to reset the bead to the start of the path
     public void ResetToStart()
     {
+        BakePath();
         currentSegment = 0;
         segmentProgress = 0f;
         isMovingForward = true;

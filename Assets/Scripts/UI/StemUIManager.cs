@@ -17,6 +17,7 @@ public class StemUIManager : MonoBehaviour
 
     Button addStemBtn, removeStemBtn;
     Button saveSessionBtn, loadSessionBtn, newSessionBtn;
+    Button playBtn, stopBtn;
     ListView stemContainer;
 
     void Awake()
@@ -39,6 +40,8 @@ public class StemUIManager : MonoBehaviour
         saveSessionBtn = root.Q<Button>("SaveSessionBtn");
         loadSessionBtn = root.Q<Button>("LoadSessionBtn");
         newSessionBtn = root.Q<Button>("NewSessionBtn");
+        playBtn = root.Q<Button>("PlayBtn");
+        stopBtn = root.Q<Button>("StopBtn");
 
         stemContainer = root.Q<ListView>("StemContainer");
 
@@ -47,6 +50,19 @@ public class StemUIManager : MonoBehaviour
         saveSessionBtn.RegisterCallback<ClickEvent>(evt => SaveSession());
         loadSessionBtn.RegisterCallback<ClickEvent>(evt => LoadSession());
         newSessionBtn.RegisterCallback<ClickEvent>(evt => NewSession());
+        playBtn.RegisterCallback<ClickEvent>(evt =>
+        {
+            stemManager.Play();
+            playBtn.style.display = DisplayStyle.None;
+            stopBtn.style.display = DisplayStyle.Flex;
+        });
+        stopBtn.RegisterCallback<ClickEvent>(evt =>
+        {
+            stemManager.Pause();
+            playBtn.style.display = DisplayStyle.Flex;
+            stopBtn.style.display = DisplayStyle.None;
+        });
+        stopBtn.style.display = DisplayStyle.None;
 
         stemContainer.makeItem = () =>
         {

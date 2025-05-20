@@ -1028,6 +1028,8 @@ MonoBehaviour:
   uiDocument: {fileID: 1506535843}
   stemUITemplate: {fileID: 9197481963319205126, guid: e33114c4270469445932abd4a31ea690, type: 3}
   optionUIManager: {fileID: 1991077921}
+  playBtnIcon: {fileID: 7388822144124034973, guid: fab0acae54222274d8483cd4364b918f, type: 3}
+  pauseBtnIcon: {fileID: 7388822144124034973, guid: 817b1d8a9630dda4e9424cfad9d203f1, type: 3}
   stemManager: {fileID: 1991077927}
 --- !u!114 &1991077926
 MonoBehaviour:

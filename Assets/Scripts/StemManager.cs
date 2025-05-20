@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.Rendering;
 
 public class StemManager : MonoBehaviour
 {
@@ -15,6 +13,8 @@ public class StemManager : MonoBehaviour
     [Header("Room Settings")]
     public AudioReverbZone audioReverbZone;
     public AudioReverbFilter audioReverbFilter;
+
+    public bool isPlaying { get; set; } = false;
 
     void Awake()
     {
@@ -65,6 +65,22 @@ public class StemManager : MonoBehaviour
     {
         Destroy(stems[index].gameObject);
         stems.RemoveAt(index);
+    }
+
+    public void Play()
+    {
+        foreach (var stem in stems)
+        {
+            stem.StartStem();
+        }
+    }
+
+    public void Pause()
+    {
+        foreach (var stem in stems)
+        {
+            stem.PauseStem();
+        }
     }
 
     public void RestartAllStems()
