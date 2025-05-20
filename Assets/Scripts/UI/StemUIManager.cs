@@ -18,6 +18,7 @@ public class StemUIManager : MonoBehaviour
     Button addStemBtn, removeStemBtn;
     Button saveSessionBtn, loadSessionBtn, newSessionBtn;
     Button playBtn, stopBtn;
+    Slider timeSlider;
     ListView stemContainer;
 
     void Awake()
@@ -43,6 +44,7 @@ public class StemUIManager : MonoBehaviour
         playBtn = root.Q<Button>("PlayBtn");
         stopBtn = root.Q<Button>("StopBtn");
 
+        timeSlider = root.Q<Slider>("TimeSlider");
         stemContainer = root.Q<ListView>("StemContainer");
 
         addStemBtn.RegisterCallback<ClickEvent>(evt => AddStem());
@@ -108,6 +110,11 @@ public class StemUIManager : MonoBehaviour
         // Update stem data on UI
         removeStemBtn.SetEnabled(!!stemItem);
         optionUIManager.SetStemData(stemItem);
+    }
+
+    public void SetTimeSlider(float time)
+    {
+        timeSlider.value = time;
     }
 
     public void SaveSession()

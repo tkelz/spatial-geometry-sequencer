@@ -15,6 +15,8 @@ public class StemManager : MonoBehaviour
     public AudioReverbFilter audioReverbFilter;
 
     public bool isPlaying { get; set; } = false;
+    public float elapsedTime { get; set; } = 0f;
+    public float maxDuration { get; set; } = 0f;
 
     void Awake()
     {
@@ -24,6 +26,20 @@ public class StemManager : MonoBehaviour
     void Start()
     {
         stems = new List<StemItem>();
+    }
+
+    void Update()
+    {
+        if (isPlaying)
+        {
+            elapsedTime += Time.deltaTime;
+            // if (elapsedTime >= GetMaxDuration())
+            // {
+            //     elapsedTime = 0f;
+            //     RestartAllStems();
+            // }
+            StemUIManager.Instance.SetTimeSlider(elapsedTime % maxDuration / maxDuration);
+        }
     }
 
     public float GetMaxDuration()
@@ -69,6 +85,8 @@ public class StemManager : MonoBehaviour
 
     public void Play()
     {
+        maxDuration = GetMaxDuration();
+        elapsedTime = 0f;
         isPlaying = true;
         foreach (var stem in stems)
         {

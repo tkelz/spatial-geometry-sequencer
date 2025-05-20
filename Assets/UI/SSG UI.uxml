@@ -13,8 +13,8 @@
                 </ui:VisualElement>
                 <ui:Toggle label="Spatialize" name="Spatialize" value="true" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-                <ui:SliderInt label="BPM" value="42" high-value="200" name="BeadSpeed" low-value="1" style="color: rgb(255, 255, 255);" />
-                <ui:SliderInt label="Offset" value="0" high-value="100" name="BeadOffset" low-value="0" style="color: rgb(255, 255, 255);" />
+                <ui:SliderInt label="BPM" value="42" high-value="200" name="BeadSpeed" low-value="1" class="ssg-slider" style="color: rgb(255, 255, 255);" />
+                <ui:SliderInt label="Offset" value="0" high-value="100" name="BeadOffset" low-value="0" class="ssg-slider" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
                 <ui:DropdownField label="Shape Type" name="ShapeType" choices="Torus,Spiral,Ring,Line" style="color: rgb(255, 255, 255);" />
                 <ui:Instance template="TorusOptionUI" name="TorusOption" style="display: none;" />
@@ -22,15 +22,15 @@
                 <ui:Instance template="PathLineOptionUI" name="LineOption" style="display: none;" />
                 <ui:Instance template="PathSpiralOptionUI" name="SpiralOption" style="display: none;" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-                <ui:Slider label="Size" value="1" high-value="5" name="Size" low-value="0.1" style="opacity: 1; color: rgb(255, 255, 255); align-items: auto;" />
+                <ui:Slider label="Size" value="1" high-value="5" name="Size" low-value="0.1" class="ssg-slider" style="opacity: 1; color: rgb(255, 255, 255); align-items: auto;" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-                <ui:Slider label="Rotation X" value="0" high-value="180" name="RotX" low-value="-180" style="color: rgb(255, 255, 255);" />
-                <ui:Slider label="Rotation Y" value="0" high-value="180" name="RotY" low-value="-180" style="flex-direction: row; color: rgb(255, 255, 255);" />
-                <ui:Slider label="Rotation Z" value="0" high-value="180" name="RotZ" low-value="-180" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Rotation X" value="0" high-value="180" name="RotX" low-value="-180" class="ssg-slider" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Rotation Y" value="0" high-value="180" name="RotY" low-value="-180" class="ssg-slider" style="flex-direction: row; color: rgb(255, 255, 255);" />
+                <ui:Slider label="Rotation Z" value="0" high-value="180" name="RotZ" low-value="-180" class="ssg-slider" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-                <ui:Slider label="Postion X" value="0" high-value="20" name="PosX" low-value="-20" style="color: rgb(255, 255, 255);" />
-                <ui:Slider label="Postion Y" value="0" high-value="20" name="PosY" low-value="-20" style="color: rgb(255, 255, 255);" />
-                <ui:Slider label="Postion Z" value="0" high-value="20" name="PosZ" low-value="-20" style="opacity: 1; color: rgb(255, 255, 255);" />
+                <ui:Slider label="Postion X" value="0" high-value="20" name="PosX" low-value="-20" class="ssg-slider" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Postion Y" value="0" high-value="20" name="PosY" low-value="-20" class="ssg-slider" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Postion Z" value="0" high-value="20" name="PosZ" low-value="-20" class="ssg-slider" style="opacity: 1; color: rgb(255, 255, 255);" />
             </ui:GroupBox>
         </ui:ScrollView>
         <ui:VisualElement style="flex-grow: 0; flex-shrink: 1; width: 280px; right: 0; top: 0; bottom: 0; align-self: flex-end; position: absolute;">
@@ -38,11 +38,11 @@
                 <ui:Toggle label="Reverb Toggle" name="ReverbToggle" value="false" style="color: rgb(255, 255, 255);" />
                 <ui:DropdownField label="Reverb Preset" name="ReverbPreset" style="color: rgb(255, 255, 255); justify-content: space-around; align-self: stretch; align-items: flex-start; flex-direction: row;" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-                <ui:Slider label="Room Size" value="-2000" high-value="0" name="RoomSize" low-value="-10000" enabled="false" style="color: rgb(255, 255, 255);" />
-                <ui:Slider label="Reverb Level" value="-2000" high-value="2000" name="ReverbLevel" low-value="-10000" enabled="false" style="color: rgb(255, 255, 255);" />
-                <ui:Slider label="Reverb Delay" value="0.02" high-value="0.1" name="ReverbDelay" low-value="0" enabled="false" style="color: rgb(255, 255, 255);" />
-                <ui:Slider label="Reflection" value="-1000" high-value="1000" name="Reflection" low-value="-10000" enabled="false" style="color: rgb(255, 255, 255);" />
-                <ui:Slider label="Reflection Delay" value="0.02" high-value="0.3" name="ReflectionDelay" low-value="0" enabled="false" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Room Size" value="-2000" high-value="0" name="RoomSize" low-value="-10000" enabled="false" class="ssg-slider" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Reverb Level" value="-2000" high-value="2000" name="ReverbLevel" low-value="-10000" enabled="false" class="ssg-slider" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Reverb Delay" value="0.02" high-value="0.1" name="ReverbDelay" low-value="0" enabled="false" class="ssg-slider" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Reflection" value="-1000" high-value="1000" name="Reflection" low-value="-10000" enabled="false" class="ssg-slider" style="color: rgb(255, 255, 255);" />
+                <ui:Slider label="Reflection Delay" value="0.02" high-value="0.3" name="ReflectionDelay" low-value="0" enabled="false" class="ssg-slider" style="color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
                 <ui:Label text="Export Options" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
                 <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: space-between; align-content: auto; align-items: stretch;">
@@ -52,7 +52,7 @@
             </ui:GroupBox>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="StemBox" style="flex-grow: 0; height: 160px;">
+    <ui:VisualElement name="StemBox" style="flex-grow: 0; height: 160px; min-height: 160px;">
         <ui:GroupBox style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.78); margin-top: 2px; margin-right: 0; margin-bottom: 0; margin-left: 0;">
             <ui:VisualElement style="flex-grow: 0; flex-direction: row; align-self: stretch; align-items: center;">
                 <ui:Label text="Stem Track Panel" style="color: rgb(255, 255, 255); -unity-font-style: bold; width: 150px; padding-left: 5px;" />
@@ -65,6 +65,9 @@
                 <ui:Button text="Load" name="LoadSessionBtn" enabled="true" class="btn-primary" style="font-size: 12px; padding-top: 0; padding-right: 8px; padding-bottom: 0; padding-left: 8px; margin-top: 0; margin-right: 4px; margin-bottom: 0; margin-left: 4px; width: auto; height: 24px; -unity-text-align: middle-center; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px;" />
             </ui:VisualElement>
             <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+            <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row;">
+                <ui:Slider value="0" high-value="1" name="TimeSlider" enabled="false" class="ssg-time-slider" style="flex-shrink: 1; flex-grow: 1; color: rgb(255, 255, 255); height: 2px; margin-left: 160px;" />
+            </ui:VisualElement>
             <ui:ListView item-template="project://database/Assets/UI/StemTemplate.uxml?fileID=9197481963319205126&amp;guid=e33114c4270469445932abd4a31ea690&amp;type=3#StemTemplate" name="StemContainer" binding-source-selection-mode="Manual" style="flex-grow: 1;" />
         </ui:GroupBox>
     </ui:VisualElement>

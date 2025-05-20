@@ -120,19 +120,18 @@ DropdownField .unity-base-field__input {
     background-color: var(--main-color);
 }
 
-/* Slider CSS */
-Slider:hover:enabled .unity-base-slider__dragger,
-Slider:active:enabled .unity-base-slider__dragger {
+/* Slider CSS */ 
+.ssg-slider:hover:enabled .unity-base-slider__dragger,
+.ssg-slider:active:enabled .unity-base-slider__dragger {
     border-color: var(--highlight-color);
     background-color:var(--main-color);
 }
-.unity-base-slider--horizontal .unity-base-slider__tracker {
+.ssg-slider .unity-base-slider__tracker {
     border-radius: 3px;
     background-color:var(--second-color);
     border-color: var(--second-color);
 }
-
-.unity-base-slider--horizontal .unity-base-slider__dragger {
+.ssg-slider .unity-base-slider__dragger {
     top: 18px;
     width: 20px;
     height: 20px;
@@ -141,6 +140,23 @@ Slider:active:enabled .unity-base-slider__dragger {
     border-radius: 100%;
 }
 
+.ssg-time-slider {
+    min-height: 6px;
+}
+.ssg-time-slider .unity-base-slider__drag-container {
+    height: 4px;
+}
+.ssg-time-slider .unity-base-slider__tracker {
+    border-radius: 3px;
+    background-color:var(--second-color);
+    border-color: var(--second-color);
+}
+.ssg-time-slider .unity-base-slider__dragger {
+    top: 6px;
+    height: 16px;
+    background-color: var(--main-color);
+    border-color: var(--second-color);
+}
 /* Scroll bar */
 .unity-scroller--vertical > .unity-scroller__low-button {
     background-color:var(--second-color);

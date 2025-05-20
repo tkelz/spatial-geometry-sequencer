@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using SFB;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class StemItem : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class StemItem : MonoBehaviour
     public Transform shapeParent;
     public AudioSource beadAudioSource;
     public FileManager fileManager;
-    public SpotLight spotLight;
+    public Light spotLight;
     public SkinnedMeshRenderer fairyMesh;
 
     public Color stemColor;
@@ -64,6 +63,7 @@ public class StemItem : MonoBehaviour
     {
         stemColor = newColor;
         bead.pathLine.material.color = stemColor;
+        spotLight.color = stemColor;
         foreach (var material in fairyMesh.materials)
         {
             material.color = stemColor;
@@ -94,7 +94,7 @@ public class StemItem : MonoBehaviour
                 activeShapeName = shapeName;
                 shape.SetActive(true);
                 bead.pathLine = shape.GetComponentInChildren<LineRenderer>();
-                bead.pathLine.material.color = stemColor;
+                bead.pathLine.material.color = new Color(stemColor.r, stemColor.g, stemColor.b, 0.5f);
                 bead.ResetToStart();
             }
             else
