@@ -222,7 +222,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1109,7 +1109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c96a49f075e40d54c91fde4e9d7a37d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioListener: {fileID: 2127034519}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

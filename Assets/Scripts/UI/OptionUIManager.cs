@@ -12,7 +12,7 @@ public class OptionUIManager : MonoBehaviour
     Button musicOpenBtn;
 
     GroupBox stemOptions;
-    Slider beadSpeed;
+    SliderInt beadSpeed;
     DropdownField shapeDropdown;
     Slider posX, posY, posZ;
     Slider rotX, rotY, rotZ;
@@ -62,7 +62,7 @@ public class OptionUIManager : MonoBehaviour
 
         musicOpenBtn = root.Q<Button>("MusicOpenBtn");
         spatializeToggle = root.Q<Toggle>("Spatialize");
-        beadSpeed = root.Q<Slider>("BeadSpeed");
+        beadSpeed = root.Q<SliderInt>("BeadSpeed");
         shapeDropdown = root.Q<DropdownField>("ShapeType");
         reverbToggle = root.Q<Toggle>("ReverbToggle");
         reverbDropdown = root.Q<DropdownField>("ReverbPreset");
@@ -131,96 +131,112 @@ public class OptionUIManager : MonoBehaviour
             TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
             torusKnotGenerator.p = evt.newValue;
             torusKnotGenerator.Generate();
+            torusP.label = $"P: {evt.newValue}";
         });
         torusQ.RegisterValueChangedCallback(evt =>
         {
             TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
             torusKnotGenerator.q = evt.newValue;
             torusKnotGenerator.Generate();
+            torusQ.label = $"Q: {evt.newValue}";
         });
         torusSegments.RegisterValueChangedCallback(evt =>
         {
             TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
             torusKnotGenerator.segments = evt.newValue;
             torusKnotGenerator.Generate();
+            torusSegments.label = $"Segments: {evt.newValue}";
         });
         torusRadius.RegisterValueChangedCallback(evt =>
         {
             TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
             torusKnotGenerator.radius = evt.newValue;
             torusKnotGenerator.Generate();
+            torusRadius.label = $"Radius: {evt.newValue:F2}";
         });
         torusTube.RegisterValueChangedCallback(evt =>
         {
             TorusKnotGenerator torusKnotGenerator = stemItem.shapeParent.GetComponentInChildren<TorusKnotGenerator>();
             torusKnotGenerator.tube = evt.newValue;
             torusKnotGenerator.Generate();
+            torusTube.label = $"Tube: {evt.newValue:F2}";
         });
         spiralTurns.RegisterValueChangedCallback(evt =>
         {
             SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
             spiral.turns = evt.newValue;
             spiral.Regenerate();
+            spiralTurns.label = $"Turns: {evt.newValue:F2}";
         });
         spiralSpacing.RegisterValueChangedCallback(evt =>
         {
             SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
             spiral.spacing = evt.newValue;
             spiral.Regenerate();
+            spiralSpacing.label = $"Spacing: {evt.newValue:F2}";
         });
         spiralStartWidth.RegisterValueChangedCallback(evt =>
         {
             SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
             spiral.widthStart = evt.newValue;
             spiral.Regenerate();
+            spiralStartWidth.label = $"Start Width: {evt.newValue:F2}";
         });
         spiralEndWidth.RegisterValueChangedCallback(evt =>
         {
             SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
             spiral.widthEnd = evt.newValue;
             spiral.Regenerate();
+            spiralEndWidth.label = $"End Width: {evt.newValue:F2}";
         });
         spiralPointsPerTurn.RegisterValueChangedCallback(evt =>
         {
             SpiralGenerator spiral = stemItem.shapeParent.GetComponentInChildren<SpiralGenerator>();
             spiral.pointsPerTurn = evt.newValue;
             spiral.Regenerate();
+            spiralPointsPerTurn.label = $"Points Per Turn: {evt.newValue}";
         });
         circleRadius.RegisterValueChangedCallback(evt =>
         {
             CirclePathGenerator circle = stemItem.shapeParent.GetComponentInChildren<CirclePathGenerator>();
             circle.radius = evt.newValue;
             circle.Generate();
+            circleRadius.label = $"Radius: {evt.newValue:F2}";
         });
         circlePointCount.RegisterValueChangedCallback(evt =>
         {
             CirclePathGenerator circle = stemItem.shapeParent.GetComponentInChildren<CirclePathGenerator>();
             circle.pointCount = evt.newValue;
             circle.Generate();
+            circlePointCount.label = $"Point Count: {evt.newValue}";
         });
         lineLength.RegisterValueChangedCallback(evt =>
         {
             WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
             linePath.length = evt.newValue;
             linePath.Generate();
+            lineLength.label = $"Length: {evt.newValue:F2}";
         });
         lineAmplitude.RegisterValueChangedCallback(evt =>
         {
             WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
             linePath.amplitude = evt.newValue;
             linePath.Generate();
+            lineAmplitude.label = $"Amplitude: {evt.newValue:F2}";
         });
         lineWaveCount.RegisterValueChangedCallback(evt =>
         {
             WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
             linePath.waveCount = evt.newValue;
             linePath.Generate();
+            lineWaveCount.label = $"Wave Count: {evt.newValue}";
         });
         linePointsPerWave.RegisterValueChangedCallback(evt =>
         {
             WaveLineGenerator linePath = stemItem.shapeParent.GetComponentInChildren<WaveLineGenerator>();
             linePath.pointsPerWave = evt.newValue;
             linePath.Generate();
+            linePointsPerWave.label = $"Points Per Wave: {evt.newValue}";
         });
 
         posX.RegisterValueChangedCallback(evt =>
@@ -321,7 +337,7 @@ public class OptionUIManager : MonoBehaviour
 
         spatializeToggle.value = stemItem.beadAudioSource.spatialize;
 
-        beadSpeed.value = stemItem.bead.bpm;
+        beadSpeed.value = (int)stemItem.bead.bpm;
         beadSpeed.label = $"BPM: {stemItem.bead.bpm:F2}";
 
         UpdatePathOptions();
@@ -345,6 +361,12 @@ public class OptionUIManager : MonoBehaviour
             torusSegments.value = torusKnotGenerator.segments;
             torusRadius.value = torusKnotGenerator.radius;
             torusTube.value = torusKnotGenerator.tube;
+
+            torusP.label = $"P: {torusKnotGenerator.p}";
+            torusQ.label = $"Q: {torusKnotGenerator.q}";
+            torusSegments.label = $"Segments: {torusKnotGenerator.segments}";
+            torusRadius.label = $"Radius: {torusKnotGenerator.radius:F2}";
+            torusTube.label = $"Tube: {torusKnotGenerator.tube:F2}";
         }
         else if (shapeDropdown.value == "Spiral")
         {
@@ -355,6 +377,12 @@ public class OptionUIManager : MonoBehaviour
             spiralStartWidth.value = spiral.widthStart;
             spiralEndWidth.value = spiral.widthEnd;
             spiralPointsPerTurn.value = spiral.pointsPerTurn;
+
+            spiralTurns.label = $"Turns: {spiral.turns:F2}";
+            spiralSpacing.label = $"Spacing: {spiral.spacing:F2}";
+            spiralStartWidth.label = $"Start Width: {spiral.widthStart:F2}";
+            spiralEndWidth.label = $"End Width: {spiral.widthEnd:F2}";
+            spiralPointsPerTurn.label = $"Points Per Turn: {spiral.pointsPerTurn}";
         }
         else if (shapeDropdown.value == "Line")
         {
@@ -364,6 +392,11 @@ public class OptionUIManager : MonoBehaviour
             lineAmplitude.value = linePath.amplitude;
             lineWaveCount.value = linePath.waveCount;
             linePointsPerWave.value = linePath.pointsPerWave;
+
+            lineLength.label = $"Length: {linePath.length:F2}";
+            lineAmplitude.label = $"Amplitude: {linePath.amplitude:F2}";
+            lineWaveCount.label = $"Wave Count: {linePath.waveCount}";
+            linePointsPerWave.label = $"Points Per Wave: {linePath.pointsPerWave}";
         }
         else if (shapeDropdown.value == "Ring")
         {
@@ -371,6 +404,9 @@ public class OptionUIManager : MonoBehaviour
             CirclePathGenerator circle = stemItem.shapeParent.GetComponentInChildren<CirclePathGenerator>();
             circleRadius.value = circle.radius;
             circlePointCount.value = circle.pointCount;
+
+            circleRadius.label = $"Radius: {circle.radius:F2}";
+            circlePointCount.label = $"Point Count: {circle.pointCount}";
         }
     }
 

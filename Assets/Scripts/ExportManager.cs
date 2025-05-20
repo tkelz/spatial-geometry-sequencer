@@ -90,7 +90,6 @@ public class ExportManager : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, filename);
         int sampleCount = samples.Count;
         int channels = 2; // assuming stereo
-        int headerSize = 44;
 
         FileStream fileStream = new FileStream(path, FileMode.Create);
         BinaryWriter writer = new BinaryWriter(fileStream);
