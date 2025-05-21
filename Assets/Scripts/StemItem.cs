@@ -136,6 +136,11 @@ public class StemItem : MonoBehaviour
         beadAudioSource.spatialize = enable;
     }
 
+    public void EnableAudio(bool enable)
+    {
+        beadAudioSource.mute = !enable;
+    }
+
     public void OpenDialog()
     {
         var extensions = new[] {
@@ -154,7 +159,6 @@ public class StemItem : MonoBehaviour
     {
         if (audioName == "Example Audio")
         {
-            print(audioUrl);
             audioClip = Resources.Load<AudioClip>(audioUrl);
             beadAudioSource.clip = audioClip;
         }

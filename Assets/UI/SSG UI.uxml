@@ -43,11 +43,8 @@
                 <ui:Slider label="Reverb Delay" value="0.02" high-value="0.1" name="ReverbDelay" low-value="0" enabled="false" class="ssg-slider" style="color: rgb(255, 255, 255);" />
                 <ui:Slider label="Reflection" value="-1000" high-value="1000" name="Reflection" low-value="-10000" enabled="false" class="ssg-slider" style="color: rgb(255, 255, 255);" />
                 <ui:Slider label="Reflection Delay" value="0.02" high-value="0.3" name="ReflectionDelay" low-value="0" enabled="false" class="ssg-slider" style="color: rgb(255, 255, 255);" />
-                <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-                <ui:Label text="Export Options" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
-                <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: space-between; align-content: auto; align-items: stretch;">
-                    <ui:Button text="Export" name="ExportBtn" class="btn-primary" style="flex-grow: 1;" />
-                </ui:VisualElement>
+                <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: auto; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: space-between; align-content: auto; align-items: stretch;" />
                 <ui:ProgressBar value="50" title="Export Progress" name="RecordingProgress" style="color: rgb(255, 255, 255);" />
             </ui:GroupBox>
         </ui:VisualElement>
@@ -68,7 +65,7 @@
             <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row;">
                 <ui:Slider value="0" high-value="1" name="TimeSlider" enabled="false" class="ssg-time-slider" style="flex-shrink: 1; flex-grow: 1; color: rgb(255, 255, 255); height: 2px; margin-left: 160px;" />
             </ui:VisualElement>
-            <ui:ListView item-template="project://database/Assets/UI/StemTemplate.uxml?fileID=9197481963319205126&amp;guid=e33114c4270469445932abd4a31ea690&amp;type=3#StemTemplate" name="StemContainer" binding-source-selection-mode="Manual" style="flex-grow: 1;" />
+            <ui:ListView item-template="project://database/Assets/UI/StemTemplate.uxml?fileID=9197481963319205126&amp;guid=e33114c4270469445932abd4a31ea690&amp;type=3#StemTemplate" name="StemContainer" binding-source-selection-mode="Manual" class="stem-tracks-list" style="flex-grow: 1;" />
         </ui:GroupBox>
     </ui:VisualElement>
 </ui:UXML>

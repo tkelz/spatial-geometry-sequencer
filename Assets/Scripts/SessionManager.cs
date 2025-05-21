@@ -170,11 +170,13 @@ public class SessionManager : MonoBehaviour
         StemManager.Instance.audioReverbZone.diffusion = reverbZoneData.diffusion;
         StemManager.Instance.audioReverbZone.density = reverbZoneData.density;
         OptionUIManager.Instance.UpdateReverbSettings();
+        OptionUIManager.Instance.EnableStemOptions(false);
     }
 
     public void NewSession()
     {
         StemManager.Instance.DestroyAllStems();
+        OptionUIManager.Instance.EnableStemOptions(false);
     }
 }
 

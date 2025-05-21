@@ -85,6 +85,7 @@ public class StemManager : MonoBehaviour
 
     public void Play()
     {
+        OptionUIManager.Instance.EnableStemOptions(false);
         maxDuration = GetMaxDuration();
         elapsedTime = 0f;
         isPlaying = true;
@@ -96,6 +97,8 @@ public class StemManager : MonoBehaviour
 
     public void Pause()
     {
+        OptionUIManager.Instance.EnableStemOptions(StemUIManager.Instance.GetSelectedIndex() != -1);
+        StemUIManager.Instance.SetTimeSlider(elapsedTime % maxDuration / maxDuration);
         isPlaying = false;
         foreach (var stem in stems)
         {
@@ -109,6 +112,22 @@ public class StemManager : MonoBehaviour
         foreach (var stem in stems)
         {
             stem.Restart();
+        }
+    }
+
+    public void MuteOtherStems(StemItem stemItem)
+    {
+        foreach (var stem in stems)
+        {
+            stem.EnableAudio(stem == stemItem);
+        }
+    }
+
+    public void UnmuteAllStems()
+    {
+        foreach (var stem in stems)
+        {
+            stem.EnableAudio(true);
         }
     }
 

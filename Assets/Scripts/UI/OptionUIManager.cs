@@ -23,7 +23,6 @@ public class OptionUIManager : MonoBehaviour
     DropdownField reverbDropdown;
     Slider reverbRoomSize, reverbLevel, reverbDelay, reverbReflection, reverbReflectionDelay;
 
-    Button exportBtn;
     ProgressBar recordingProgressBar;
 
     StemItem stemItem;
@@ -105,7 +104,6 @@ public class OptionUIManager : MonoBehaviour
         linePointsPerWave = root.Q<SliderInt>("LinePointsPerWave");
 
         // Export Options
-        exportBtn = root.Q<Button>("ExportBtn");
         recordingProgressBar = root.Q<ProgressBar>("RecordingProgress");
 
         // Hook up callbacks
@@ -305,7 +303,6 @@ public class OptionUIManager : MonoBehaviour
         });
 
         // Export
-        exportBtn.RegisterCallback<ClickEvent>(evt => ExportManager.Instance.StartRecording());
         recordingProgressBar.value = 0;
     }
 
@@ -440,14 +437,9 @@ public class OptionUIManager : MonoBehaviour
         }
     }
 
-    public void EnableExportOptions(bool enabled)
-    {
-        exportBtn.SetEnabled(enabled);
-    }
-
     public void SetRecordProgressBar(float progress)
     {
         recordingProgressBar.value = progress;
-        recordingProgressBar.title = $"Export Progress ({progress:F2})";
+        recordingProgressBar.title = $"Export Progress ({progress:F2} %)";
     }
 }

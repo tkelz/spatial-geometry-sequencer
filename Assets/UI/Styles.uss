@@ -189,3 +189,21 @@ DropdownField .unity-base-field__input {
     border-color: var(--second-color);
     opacity: 0.2;
 }
+
+/* List View */
+.stem-tracks-list .unity-collection-view__item:hover:enabled {
+    background-color: var(--highlight-color);
+}
+
+.stem-tracks-list:focus:enabled .unity-collection-view__item-selected,
+.stem-tracks-list:focus:enabled .unity-collection-view__item-selected:checked,
+.stem-tracks-list:focus:enabled .unity-collection-view__item-selected:checked:enabled,
+.stem-tracks-list:focus:enabled .unity-collection-view__item-selected:hover:enabled
+.stem-tracks-list:focus:enabled .unity-collection-view__item-selected:hover:enabled:checked,
+.stem-tracks-list .unity-collection-view__item-selected,
+.stem-tracks-list .unity-collection-view__item-selected:hover:enabled,
+.stem-tracks-list .unity-collection-view__item-selected:checked,
+.stem-tracks-list .unity-collection-view__item-selected:checked:enabled {
+    /* background-color: var(--second-color); */
+    background-color: #ff0000;
+}

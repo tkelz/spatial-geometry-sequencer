@@ -54,14 +54,16 @@ public class ExportManager : MonoBehaviour
         }
     }
 
-    public void StartRecording()
+    public void StartRecordingOneStem(StemItem stemItem)
     {
         recordedTime = 0;
-        audioSeconds = StemManager.Instance.GetMaxDuration();
+        audioSeconds = stemItem.beadAudioSource.clip.length;
         isRecording = true;
         samples.Clear();
-        OptionUIManager.Instance.EnableExportOptions(false);
+        // OptionUIManager.Instance.EnableExportOptions(false);
+        StemManager.Instance.MuteOtherStems(stemItem);
         StemManager.Instance.RestartAllStems();
+        StemManager.Instance.Play();
     }
 
     public void GetAudioClip()
@@ -75,7 +77,10 @@ public class ExportManager : MonoBehaviour
         recordedClip.SetData(data, 0);
 
         ExportAudio();
-        OptionUIManager.Instance.EnableExportOptions(true);
+        // OptionUIManager.Instance.EnableExportOptions(true);
+        StemManager.Instance.UnmuteAllStems();
+        StemManager.Instance.RestartAllStems();
+        StemManager.Instance.Pause();
     }
 
     public void ExportAudio()

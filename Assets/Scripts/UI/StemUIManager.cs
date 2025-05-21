@@ -57,14 +57,12 @@ public class StemUIManager : MonoBehaviour
             stemManager.Play();
             playBtn.style.display = DisplayStyle.None;
             stopBtn.style.display = DisplayStyle.Flex;
-            optionUIManager.EnableStemOptions(false);
         });
         stopBtn.RegisterCallback<ClickEvent>(evt =>
         {
             stemManager.Pause();
             playBtn.style.display = DisplayStyle.Flex;
             stopBtn.style.display = DisplayStyle.None;
-            optionUIManager.EnableStemOptions(stemContainer.selectedIndex != -1);
         });
         stopBtn.style.display = DisplayStyle.None;
 
@@ -74,6 +72,9 @@ public class StemUIManager : MonoBehaviour
             var newStem = stemManager.stems.Last();
             newStem.SetVisualElements(newStemUI);
             newStemUI.userData = newStem;
+
+            newStemUI.Q<Button>("ExportBtn").RegisterCallback<ClickEvent>(evt => OnExportStem(newStem));
+
             return newStemUI;
         };
         stemContainer.bindItem = (item, index) =>
@@ -82,6 +83,11 @@ public class StemUIManager : MonoBehaviour
             item.userData = stemManager.stems[index];
         };
         stemContainer.selectionChanged += OnStemChange;
+    }
+
+    public int GetSelectedIndex()
+    {
+        return stemContainer.selectedIndex;
     }
 
     public void RefreshItems()
@@ -126,7 +132,6 @@ public class StemUIManager : MonoBehaviour
     {
         SessionManager.Instance.LoadSession();
         RefreshItems();
-        optionUIManager.EnableStemOptions(false);
     }
 
     public void NewSession()
@@ -134,6 +139,10 @@ public class StemUIManager : MonoBehaviour
         SessionManager.Instance.NewSession();
         stemContainer.ClearSelection();
         RefreshItems();
-        optionUIManager.EnableStemOptions(false);
+    }
+
+    public void OnExportStem(StemItem stemItem)
+    {
+        ExportManager.Instance.StartRecordingOneStem(stemItem);
     }
 }
