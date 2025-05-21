@@ -98,7 +98,7 @@ public class StemManager : MonoBehaviour
     public void Pause()
     {
         OptionUIManager.Instance.EnableStemOptions(StemUIManager.Instance.GetSelectedIndex() != -1);
-        StemUIManager.Instance.SetTimeSlider(elapsedTime % maxDuration / maxDuration);
+        StemUIManager.Instance.SetTimeSlider(0);
         isPlaying = false;
         foreach (var stem in stems)
         {
