@@ -344,15 +344,15 @@ public class OptionUIManager : MonoBehaviour
         float s = stemItem.shapeParent.localScale.x;
         size.value = s; size.label = $"Size: {s:F2}";
 
-        shapeDropdown.value = stemItem.activeShapeName;
+        shapeDropdown.SetValueWithoutNotify(stemItem.activeShapeName);
 
         ChangeMusicName(stemItem.audioName);
 
-        spatializeToggle.value = stemItem.beadAudioSource.spatialize;
+        spatializeToggle.SetValueWithoutNotify(stemItem.beadAudioSource.spatialize);
 
-        beadSpeed.value = (int)stemItem.bead.bpm;
+        beadSpeed.SetValueWithoutNotify((int)stemItem.bead.bpm);
         beadSpeed.label = $"BPM: {stemItem.bead.bpm:F2}";
-        beadOffset.value = stemItem.bead.offset;
+        beadOffset.SetValueWithoutNotify(stemItem.bead.offset);
         beadOffset.label = $"Offset: {stemItem.bead.offset}";
 
         UpdatePathOptions();
