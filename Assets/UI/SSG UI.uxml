@@ -62,7 +62,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="Divider" style="flex-grow: 0; flex-shrink: 0; background-color: rgba(168, 168, 168, 0.74); height: 1px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; display: flex;" />
         <ui:VisualElement style="flex-grow: 0; flex-shrink: 0; flex-direction: row; display: flex;">
-            <ui:Slider value="0" high-value="1" name="TimeSlider" enabled="false" class="ssg-time-slider" style="flex-shrink: 1; flex-grow: 1; color: rgb(255, 255, 255); height: 2px; margin-left: 160px;" />
+            <ui:Slider value="0" high-value="1" name="TimeSlider" enabled="false" class="ssg-time-slider" style="flex-shrink: 1; flex-grow: 1; color: rgb(255, 255, 255); height: 2px; margin-left: 160px; margin-right: 65px;" />
         </ui:VisualElement>
         <ui:ListView item-template="project://database/Assets/UI/StemTemplate.uxml?fileID=9197481963319205126&amp;guid=e33114c4270469445932abd4a31ea690&amp;type=3#StemTemplate" name="StemContainer" binding-source-selection-mode="Manual" horizontal-scrolling="true" show-add-remove-footer="false" show-border="false" virtualization-method="FixedHeight" fixed-item-height="24" show-bound-collection-size="false" class="stem-tracks-list" style="flex-grow: 1; margin-top: 2px; margin-bottom: 2px;" />
     </ui:VisualElement>

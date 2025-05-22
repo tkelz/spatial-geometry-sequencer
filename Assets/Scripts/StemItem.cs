@@ -38,6 +38,10 @@ public class StemItem : MonoBehaviour
     void Start()
     {
         LoadAudio(audioUrl);
+        if (StemManager.Instance.isPlaying)
+        {
+            StartStem();
+        }
     }
 
     public void StartStem()
@@ -97,6 +101,7 @@ public class StemItem : MonoBehaviour
                 bead.pathLine = shape.GetComponentInChildren<LineRenderer>();
                 bead.pathLine.material.color = new Color(stemColor.r, stemColor.g, stemColor.b, 0.5f);
                 bead.ResetToStart();
+                bead.isMoving = StemManager.Instance.isPlaying;
             }
             else
             {
@@ -127,8 +132,8 @@ public class StemItem : MonoBehaviour
 
     public void ChangeBeadOffset(int offset)
     {
-        bead.offset = offset;
-        bead.ResetToStart();
+        bead.SetOffset(offset);
+        // bead.ResetToStart();
     }
 
     public void EnableSpatialize(bool enable)

@@ -321,6 +321,15 @@ public class BeadMover : MonoBehaviour
         return length;
     }
 
+    public void SetOffset(int newOffset)
+    {
+        offset = newOffset;
+        currentSegment = (pathPoints.Count - 1) * offset / 100;
+
+        if (pathPoints.Count > 0)
+            transform.position = pathPoints[currentSegment];
+    }
+
     // Public method to reset the bead to the start of the path
     public void ResetToStart()
     {

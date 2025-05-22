@@ -328,7 +328,8 @@ public class OptionUIManager : MonoBehaviour
             return;
         }
 
-        EnableStemOptions(!StemManager.Instance.isPlaying);
+        // EnableStemOptions(!StemManager.Instance.isPlaying);
+        EnableStemOptions(true);
 
         this.stemItem = stemItem;
         var p = stemItem.shapeParent.position;
