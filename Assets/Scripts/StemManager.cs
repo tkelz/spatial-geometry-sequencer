@@ -141,19 +141,36 @@ public class StemManager : MonoBehaviour
     {
         audioReverbZone.reverbPreset = preset;
         audioReverbFilter.reverbPreset = preset;
-        // masterMixerGroup.audioMixer.SetFloat("Room", audioReverbZone.room);
-        // masterMixerGroup.audioMixer.SetFloat("RoomHF", audioReverbZone.roomHF);
-        // masterMixerGroup.audioMixer.SetFloat("RoomLF", audioReverbZone.roomLF);
-        // masterMixerGroup.audioMixer.SetFloat("DecayTime", audioReverbZone.decayTime);
-        // masterMixerGroup.audioMixer.SetFloat("DecayHFRatio", audioReverbZone.decayHFRatio);
-        // masterMixerGroup.audioMixer.SetFloat("Reflections", audioReverbZone.reflections);
-        // masterMixerGroup.audioMixer.SetFloat("ReflectionsDelay", audioReverbZone.reflectionsDelay);
-        // masterMixerGroup.audioMixer.SetFloat("ReverbLevel", audioReverbZone.reverb);
-        // masterMixerGroup.audioMixer.SetFloat("ReverbDelay", audioReverbZone.reverbDelay);
-        // masterMixerGroup.audioMixer.SetFloat("Diffusion", audioReverbZone.diffusion);
-        // masterMixerGroup.audioMixer.SetFloat("Density", audioReverbZone.density);
-        // masterMixerGroup.audioMixer.SetFloat("HFReference", audioReverbZone.HFReference);
-        // masterMixerGroup.audioMixer.SetFloat("LFReference", audioReverbZone.LFReference);
+    }
+
+    public void SetReverbRoomSize(int size)
+    {
+        audioReverbZone.room = size;
+        audioReverbFilter.room = size;
+    }
+
+    public void SetReverbLevel(int level)
+    {
+        audioReverbZone.reverb = level;
+        audioReverbFilter.reverbLevel = level;
+    }
+
+    public void SetReverbDelay(float delay)
+    {
+        audioReverbZone.reverbDelay = delay;
+        audioReverbFilter.reverbDelay = delay;
+    }
+
+    public void SetReverbReflections(int reflections)
+    {
+        audioReverbZone.reflections = reflections;
+        audioReverbFilter.reflectionsLevel = reflections;
+    }
+
+    public void SetReverbReflectionsDelay(float delay)
+    {
+        audioReverbZone.reflectionsDelay = delay;
+        audioReverbFilter.reflectionsDelay = delay;
     }
 }
 

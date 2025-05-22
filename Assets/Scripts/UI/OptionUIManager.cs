@@ -21,7 +21,8 @@ public class OptionUIManager : MonoBehaviour
     Toggle spatializeToggle;
     Toggle reverbToggle;
     DropdownField reverbDropdown;
-    Slider reverbRoomSize, reverbLevel, reverbDelay, reverbReflection, reverbReflectionDelay;
+    SliderInt reverbRoomSize, reverbLevel, reverbReflection;
+    Slider reverbDelay, reverbReflectionDelay;
 
     ProgressBar recordingProgressBar;
 
@@ -65,10 +66,10 @@ public class OptionUIManager : MonoBehaviour
         shapeDropdown = root.Q<DropdownField>("ShapeType");
         reverbToggle = root.Q<Toggle>("ReverbToggle");
         reverbDropdown = root.Q<DropdownField>("ReverbPreset");
-        reverbRoomSize = root.Q<Slider>("RoomSize");
-        reverbLevel = root.Q<Slider>("ReverbLevel");
+        reverbRoomSize = root.Q<SliderInt>("RoomSize");
+        reverbLevel = root.Q<SliderInt>("ReverbLevel");
         reverbDelay = root.Q<Slider>("ReverbDelay");
-        reverbReflection = root.Q<Slider>("Reflection");
+        reverbReflection = root.Q<SliderInt>("Reflection");
         reverbReflectionDelay = root.Q<Slider>("ReflectionDelay");
 
         // Look up sliders by the name attribute in UXML
@@ -300,7 +301,15 @@ public class OptionUIManager : MonoBehaviour
             reverbDelay.value = StemManager.Instance.audioReverbZone.reverbDelay;
             reverbReflection.value = StemManager.Instance.audioReverbZone.reflections;
             reverbReflectionDelay.value = StemManager.Instance.audioReverbZone.reflectionsDelay;
+
+            StemManager.Instance.ChangeReverbPreset(AudioReverbPreset.User);
         });
+        reverbDropdown.value = AudioReverbPreset.Bathroom.ToString();
+        reverbRoomSize.RegisterValueChangedCallback(evt => StemManager.Instance.SetReverbRoomSize(evt.newValue));
+        reverbLevel.RegisterValueChangedCallback(evt => StemManager.Instance.SetReverbLevel(evt.newValue));
+        reverbDelay.RegisterValueChangedCallback(evt => StemManager.Instance.SetReverbDelay(evt.newValue));
+        reverbReflection.RegisterValueChangedCallback(evt => StemManager.Instance.SetReverbReflections(evt.newValue));
+        reverbReflectionDelay.RegisterValueChangedCallback(evt => StemManager.Instance.SetReverbReflectionsDelay(evt.newValue));
 
         // Export
         recordingProgressBar.value = 0;
@@ -343,6 +352,8 @@ public class OptionUIManager : MonoBehaviour
 
         beadSpeed.value = (int)stemItem.bead.bpm;
         beadSpeed.label = $"BPM: {stemItem.bead.bpm:F2}";
+        beadOffset.value = stemItem.bead.offset;
+        beadOffset.label = $"Offset: {stemItem.bead.offset}";
 
         UpdatePathOptions();
     }

@@ -169,6 +169,21 @@ public class SessionManager : MonoBehaviour
         StemManager.Instance.audioReverbZone.LFReference = reverbZoneData.lfReference;
         StemManager.Instance.audioReverbZone.diffusion = reverbZoneData.diffusion;
         StemManager.Instance.audioReverbZone.density = reverbZoneData.density;
+        StemManager.Instance.audioReverbFilter.enabled = reverbZoneData.enabled;
+        StemManager.Instance.audioReverbFilter.reverbPreset = reverbZoneData.preset;
+        StemManager.Instance.audioReverbFilter.room = reverbZoneData.roomSize;
+        StemManager.Instance.audioReverbFilter.roomHF = reverbZoneData.roomHF;
+        StemManager.Instance.audioReverbFilter.roomLF = reverbZoneData.roomLF;
+        StemManager.Instance.audioReverbFilter.decayTime = reverbZoneData.decayTime;
+        StemManager.Instance.audioReverbFilter.decayHFRatio = reverbZoneData.decayHFRatio;
+        StemManager.Instance.audioReverbFilter.reflectionsLevel = reverbZoneData.reflectionsLevel;
+        StemManager.Instance.audioReverbFilter.reflectionsDelay = reverbZoneData.reflectionsDelay;
+        StemManager.Instance.audioReverbFilter.reverbLevel = reverbZoneData.reverbLevel;
+        StemManager.Instance.audioReverbFilter.reverbDelay = reverbZoneData.reverbDelay;
+        StemManager.Instance.audioReverbFilter.hfReference = reverbZoneData.hfReference;
+        StemManager.Instance.audioReverbFilter.lfReference = reverbZoneData.lfReference;
+        StemManager.Instance.audioReverbFilter.diffusion = reverbZoneData.diffusion;
+        StemManager.Instance.audioReverbFilter.density = reverbZoneData.density;
         OptionUIManager.Instance.UpdateReverbSettings();
         OptionUIManager.Instance.EnableStemOptions(false);
     }
